@@ -20,7 +20,6 @@ public class Sewer {
     @Column(nullable = false)
     private  double lon;
     @Column(nullable = false,name = "States")
-
     @Setter
     private  String States;
     @Column(nullable = false)
@@ -56,10 +55,10 @@ public class Sewer {
     @Column(nullable = false)
     @Setter
     private int Oct_Count;
-    @Column(nullable = false, name = "Novs")
+    @Column(nullable = false)
     @Setter
     private int Nov_Count;
-    @Column(nullable = false, name = "Decs")
+    @Column(nullable = false)
     @Setter
     private int Dec_Count;
     @Setter

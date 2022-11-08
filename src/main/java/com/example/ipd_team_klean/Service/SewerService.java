@@ -127,9 +127,11 @@ public class SewerService {
 
         return sewerRepository.save(findsewer);
     }
+    //오랜지 하수구 전체 리스트 얻기
     public List<Sewer> ListActiveStateOrage(String state){
         return sewerRepository.getStateActiveSewerOrange(state);
     }
+    // 빨간하수구 전체 리스트 얻기
     public List<Sewer> ListActiveStateRed(String state){
         return sewerRepository.getStateActiveSewerRed(state);
     }

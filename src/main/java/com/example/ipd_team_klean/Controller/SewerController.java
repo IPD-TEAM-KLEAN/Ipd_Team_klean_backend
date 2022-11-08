@@ -89,7 +89,7 @@ public class SewerController {
 
     }
     // 막힌 하수구 전체 리스트 보기
-    @GetMapping("/active/state/sewer")
+    @GetMapping("/active/state/list/sewer")
     public ResponseEntity<?> ActiveStateSewer(){
       List<ResponseActiveSewerListDto> responseActiveSewerListDtos = findActiveSewer();
         Map<String, Object> result = new HashMap<>();
@@ -132,6 +132,8 @@ public class SewerController {
                 .dec(sewer.getDec_Count())
                 .blockDate(sewer.getBlockDate())
                 .blockTime(sewer.getBlockTime())
+                .address_name(sewer.getAddress_name())
+                .region_name(sewer.getRegion_name())
                 .build();
         return ResponseEntity.ok().body(responseBlockSewerInfo);
     }
@@ -270,6 +272,8 @@ public class SewerController {
                     .longtitude(sewer.getLon())
                     .latitude(sewer.getLat())
                     .state(sewer.getStates())
+                    .address_name(sewer.getAddress_name())
+                    .region_name(sewer.getRegion_name())
                     .build();
             responseActiveSewerListDtos.add(responseActiveSewerListDto);
         }
@@ -278,6 +282,8 @@ public class SewerController {
                     .longtitude(sewer.getLon())
                     .latitude(sewer.getLat())
                     .state(sewer.getStates())
+                    .address_name(sewer.getAddress_name())
+                    .region_name(sewer.getRegion_name())
                     .build();
             responseActiveSewerListDtos.add(responseActiveSewerListDto);
         }
