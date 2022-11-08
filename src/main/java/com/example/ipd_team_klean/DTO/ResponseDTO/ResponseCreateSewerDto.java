@@ -37,11 +37,14 @@ public class ResponseCreateSewerDto {
     private int Nov;
 
     private int Dec;
+    private String Address_name;
+
+    private String Region_name;
 
 
     @Builder
 
-    public ResponseCreateSewerDto(double latitude, double longtitude, String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec) {
+    public ResponseCreateSewerDto(double latitude, double longtitude, String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec, String region_name, String address_name) {
         Latitude = latitude;
         Longtitude = longtitude;
         State = state;
@@ -58,5 +61,7 @@ public class ResponseCreateSewerDto {
         Oct = oct;
         Nov = nov;
         Dec = dec;
+        Address_name = address_name;
+        Region_name = region_name;
     }
 }

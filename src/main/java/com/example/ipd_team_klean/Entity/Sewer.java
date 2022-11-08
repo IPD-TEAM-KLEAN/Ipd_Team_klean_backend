@@ -67,9 +67,18 @@ public class Sewer {
     @Setter
     private LocalTime BlockTime;
 
+    @Setter
+    //@Column(nullable = false)
+    @Column(nullable = false)
+    private String Address_name;
+
+    @Setter
+    //@Column(nullable = false)
+    @Column(nullable = false)
+    private String Region_name;
     @Builder
 
-    public Sewer(double latitude, double longitude, String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec, LocalDate blockDate, LocalTime blockTime) {
+    public Sewer(Double latitude, Double longitude, String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec, LocalDate blockDate, LocalTime blockTime, String address_name, String region_name) {
         this.lat = latitude;
         lon = longitude;
         States = state;
@@ -88,5 +97,7 @@ public class Sewer {
         Dec_Count = dec;
         BlockDate = blockDate;
         BlockTime = blockTime;
+        Address_name = address_name;
+        Region_name = region_name;
     }
 }

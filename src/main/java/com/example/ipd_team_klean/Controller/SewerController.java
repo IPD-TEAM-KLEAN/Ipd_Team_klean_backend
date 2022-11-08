@@ -33,7 +33,7 @@ public class SewerController {
     // 하수구 생성 및 db 저장
     @PostMapping("/create/sewer")
     public ResponseEntity<?> CreateSewer(@RequestBody RequestCreateSewerDto requestCreateSewerDto) throws Exception {
-        System.out.println(requestCreateSewerDto.getLatitude());
+
         Sewer sewer = sewerService.CreateSewer(requestCreateSewerDto);
 
         ResponseCreateSewerDto responseCreateSewerDto = ResponseCreateSewerDto.builder()
@@ -53,8 +53,10 @@ public class SewerController {
                 .oct(sewer.getOct_Count())
                 .nov(sewer.getNov_Count())
                 .dec(sewer.getDec_Count())
+                .address_name(sewer.getAddress_name())
+                .region_name(sewer.getRegion_name())
                 .build();
-        return  ResponseEntity.ok().body(requestCreateSewerDto);
+        return  ResponseEntity.ok().body(responseCreateSewerDto);
     }
 
 

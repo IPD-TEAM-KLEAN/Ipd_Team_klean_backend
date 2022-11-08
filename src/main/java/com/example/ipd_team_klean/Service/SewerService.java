@@ -6,26 +6,38 @@ import com.example.ipd_team_klean.Entity.Sewer;
 import com.example.ipd_team_klean.Repository.SewerRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class SewerService {
     private final SewerRepository sewerRepository;
+    private  final  LocationService locationService;
 
-    @Autowired
-    public SewerService(SewerRepository sewerRepository) {
-        this.sewerRepository = sewerRepository;
-    }
 
     public Sewer CreateSewer(RequestCreateSewerDto requestCreateSewerDto) throws Exception {
         if(sewerRepository.existsByLatAndLon(requestCreateSewerDto.getLatitude(),requestCreateSewerDto.getLongitude())== true){
             throw  new Exception("해당 하수구가 이미 존재합니다.");
         }
+        //System.out.println(requestCreateSewerDto.getLongitude());
+        //System.out.println(requestCreateSewerDto.getLatitude());
+        Map<String, Object> map = locationService.getLocation(requestCreateSewerDto.getLongitude(),requestCreateSewerDto.getLatitude()).documents[0].address; // y 위도 latitude, x 경도 longitude
+
+       // System.out.println(map);
+        Collection<Object> values = map.values();
+//        System.out.println(values);
+        String Address_name = (String) map.get("address_name");
+        String Region_name = (String) map.get("region_1depth_name");
+//        System.out.println(Address_name);
+//        System.out.println(Region_name);
         Sewer sewer = Sewer.builder()
                 .longitude(requestCreateSewerDto.getLongitude())
                 .latitude(requestCreateSewerDto.getLatitude())
@@ -43,6 +55,8 @@ public class SewerService {
                 .oct(0)
                 .nov(0)
                 .dec(0)
+                .region_name(Region_name)
+                .address_name(Address_name)
                 .build();
 
         return sewerRepository.save(sewer);
