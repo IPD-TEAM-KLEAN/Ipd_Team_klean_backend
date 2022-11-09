@@ -1,18 +1,16 @@
-package com.example.ipd_team_klean.DTO.ResponseDTO;
+package com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @NoArgsConstructor
 @Getter
-public class ResponseBlockSewerInfo {
-    private  double Latitude;
-    private  double Longtitude;
+public class ResponseUpdateBlockSewerDto {
+
     private  String State;
     private  int BlockCount;
     private  int Jan;
@@ -38,15 +36,15 @@ public class ResponseBlockSewerInfo {
     private int Nov;
 
     private int Dec;
-    private LocalDate BlockDate;
+    private  LocalDate BlockDate;
     private LocalTime BlockTime;
-    private String Address_name;
-    private String Region_name;
+
+
+
     @Builder
 
-    public ResponseBlockSewerInfo(double latitude, double longtitude, String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec, LocalDate blockDate, LocalTime blockTime, String address_name, String region_name) {
-        Latitude = latitude;
-        Longtitude = longtitude;
+    public ResponseUpdateBlockSewerDto( String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec, LocalDate blockDate , LocalTime blockTime) {
+
         State = state;
         BlockCount = blockCount;
         Jan = jan;
@@ -63,7 +61,5 @@ public class ResponseBlockSewerInfo {
         Dec = dec;
         BlockDate = blockDate;
         BlockTime = blockTime;
-        Address_name = address_name;
-        Region_name = region_name;
     }
 }

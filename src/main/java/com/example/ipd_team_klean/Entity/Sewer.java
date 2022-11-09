@@ -14,57 +14,12 @@ import java.time.LocalTime;
 public class Sewer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "sewer_id")
     private  int id;
     @Column(nullable = false)
     private  double lat;
     @Column(nullable = false)
     private  double lon;
-    @Column(nullable = false,name = "States")
-    @Setter
-    private  String States;
-    @Column(nullable = false)
-    @Setter
-    private  int BlockCount;
-    @Column(nullable = false)
-    @Setter
-    private int Jan_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Feb_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Mar_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Apr_Count;
-    @Column(nullable = false)
-    @Setter
-    private int May_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Jun_Count;
-    @Column(nullable = false)
-    @Setter
-    private int July_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Aug_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Sep_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Oct_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Nov_Count;
-    @Column(nullable = false)
-    @Setter
-    private int Dec_Count;
-    @Setter
-    private LocalDate BlockDate;
-    @Setter
-    private LocalTime BlockTime;
 
     @Setter
     //@Column(nullable = false)
@@ -75,28 +30,16 @@ public class Sewer {
     //@Column(nullable = false)
     @Column(nullable = false)
     private String Region_name;
+
+    @OneToOne(mappedBy = "sewer")
+    private  Block block;
     @Builder
 
-    public Sewer(Double latitude, Double longitude, String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec, LocalDate blockDate, LocalTime blockTime, String address_name, String region_name) {
+    public Sewer(Double latitude, Double longitude, String address_name, String region_name, Block block) {
         this.lat = latitude;
         lon = longitude;
-        States = state;
-        BlockCount = blockCount;
-        Jan_Count = jan;
-        Feb_Count = feb;
-        Mar_Count = mar;
-        Apr_Count = apr;
-        May_Count = may;
-        Jun_Count = jun;
-        July_Count = july;
-        Aug_Count = aug;
-        Sep_Count = sep;
-        Oct_Count = oct;
-        Nov_Count = nov;
-        Dec_Count = dec;
-        BlockDate = blockDate;
-        BlockTime = blockTime;
         Address_name = address_name;
         Region_name = region_name;
+        this.block = block;
     }
 }
