@@ -75,8 +75,9 @@ public class BlockService {
             }
 
 
-        } else if (findsewer.getBlock().getStates().equals("red")) { // 주->빨
+        } else if (findsewer.getBlock().getStates().equals("red")) {
             if(requestUpdateSewerDto.getState().equals("green")){
+                findsewer.getDeclaration().setDeclaration_Count(0);
                 findsewer.getBlock().setStates(requestUpdateSewerDto.getState());
 
             }

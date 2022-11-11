@@ -3,8 +3,10 @@ package com.example.ipd_team_klean.Service;
 import com.example.ipd_team_klean.DTO.RequestDTO.SewerRequestDTO.RequestCreateSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseCreateSewerDto;
 import com.example.ipd_team_klean.Entity.Block;
+import com.example.ipd_team_klean.Entity.Declaration;
 import com.example.ipd_team_klean.Entity.Sewer;
 import com.example.ipd_team_klean.Repository.BlockRepository.BlockRepository;
+import com.example.ipd_team_klean.Repository.DeclarationRepository.DeclarationRepository;
 import com.example.ipd_team_klean.Repository.SewerRepository.SewerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ public class SewerService {
     private final SewerRepository sewerRepository;
     private  final  LocationService locationService;
     private  final BlockRepository blockRepository;
+
+    private  final DeclarationRepository declarationRepository;
 
 
     public ResponseCreateSewerDto CreateSewer(RequestCreateSewerDto requestCreateSewerDto) throws Exception {
@@ -61,8 +65,14 @@ public class SewerService {
                 .sewer(sewer)
                 .build();
 
+        // 초기 신고 상태 0 으로 해서 신고 만들기
+        Declaration declaration = Declaration.builder().declaration_Count(0).sewer(sewer).build();
+
+
         sewerRepository.save(sewer);
         blockRepository.save(block);
+        declarationRepository.save(declaration);
+
 
         ResponseCreateSewerDto responseCreateSewerDto = ResponseCreateSewerDto.builder()
                 .latitude(sewer.getLat())

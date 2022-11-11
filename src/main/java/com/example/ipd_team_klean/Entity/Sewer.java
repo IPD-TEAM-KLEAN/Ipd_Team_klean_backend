@@ -33,6 +33,9 @@ public class Sewer {
 
     @OneToOne(mappedBy = "sewer")
     private  Block block;
+
+    @OneToOne(mappedBy = "sewer")
+    private  Declaration declaration;
     @Builder
 
     public Sewer(Double latitude, Double longitude, String address_name, String region_name, Block block) {
