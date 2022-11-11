@@ -29,6 +29,7 @@ public class DeclarationService {
         // 만약 하수구의 상태가 red 일시 만 count 가 올리도록 그게 아니면 오류 처리
 
         if(sewer.getBlock().getStates().equals("red")){
+            sewer.getDeclaration().setAccumulate_Count(sewer.getDeclaration().getAccumulate_Count()+1);
             sewer.getDeclaration().setDeclaration_Count(sewer.getDeclaration().getDeclaration_Count()+1);
             sewerRepository.save(sewer);
 

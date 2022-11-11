@@ -66,7 +66,7 @@ public class SewerService {
                 .build();
 
         // 초기 신고 상태 0 으로 해서 신고 만들기
-        Declaration declaration = Declaration.builder().declaration_Count(0).sewer(sewer).build();
+        Declaration declaration = Declaration.builder().declaration_Count(0).accumulate_Count(0).sewer(sewer).build();
 
 
         sewerRepository.save(sewer);

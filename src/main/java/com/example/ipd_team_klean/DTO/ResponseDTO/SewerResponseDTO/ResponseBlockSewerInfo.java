@@ -42,9 +42,11 @@ public class ResponseBlockSewerInfo {
     private LocalTime BlockTime;
     private String Address_name;
     private String Region_name;
+
+    private  int Accumulate_Count;
     @Builder
 
-    public ResponseBlockSewerInfo(double latitude, double longtitude, String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec, LocalDate blockDate, LocalTime blockTime, String address_name, String region_name) {
+    public ResponseBlockSewerInfo(double latitude, double longtitude, String state, int blockCount, int jan, int feb, int mar, int apr, int may, int jun, int july, int aug, int sep, int oct, int nov, int dec, LocalDate blockDate, LocalTime blockTime, String address_name, String region_name, int accumulate_Count) {
         Latitude = latitude;
         Longtitude = longtitude;
         State = state;
@@ -65,5 +67,6 @@ public class ResponseBlockSewerInfo {
         BlockTime = blockTime;
         Address_name = address_name;
         Region_name = region_name;
+        Accumulate_Count = accumulate_Count;
     }
 }

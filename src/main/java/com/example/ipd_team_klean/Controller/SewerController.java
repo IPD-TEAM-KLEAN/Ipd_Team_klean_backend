@@ -63,6 +63,7 @@ public class SewerController {
                 .blockTime(sewer.getBlock().getBlockTime())
                 .address_name(sewer.getAddress_name())
                 .region_name(sewer.getRegion_name())
+                .accumulate_Count(sewer.getDeclaration().getAccumulate_Count())
                 .build();
         return ResponseEntity.ok().body(responseBlockSewerInfo);
     }
