@@ -3,6 +3,7 @@ package com.example.ipd_team_klean.Service;
 import com.example.ipd_team_klean.DTO.RequestDTO.BlockRequestDTO.RequestUpdateSewerBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseActiveBlockListDTO;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseBlockInfoDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseLookUpBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseUpdateBlockSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
 import com.example.ipd_team_klean.Entity.Block;
@@ -278,6 +279,17 @@ public class BlockService {
             totalDec = totalDec + block.getDec_Count();
         }
         return  totalDec;
+    }
+
+    public ResponseLookUpBlockDto LookUpBlock(double lat, double lon){
+
+        Sewer findSewer = sewerRepository.findByLatAndLon(lat, lon);
+        ResponseLookUpBlockDto responseLookUpBlockDto = ResponseLookUpBlockDto.builder()
+                .state(findSewer.getBlock().getStates())
+                .build();
+
+        return responseLookUpBlockDto;
+
     }
 
 

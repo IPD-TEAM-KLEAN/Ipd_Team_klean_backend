@@ -2,6 +2,7 @@ package com.example.ipd_team_klean.Controller;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.BlockRequestDTO.RequestUpdateSewerBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseBlockInfoDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseLookUpBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseUpdateBlockSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseBlockListCountSewerDTO;
@@ -68,7 +69,10 @@ public class BlockController {
 
     // 월별 막힌 횟수 받기
     @GetMapping("block/1/sewer")
-    public ResponseEntity<?> Block1Sewer(){
+    public ResponseEntity<?> Block1Sewer(Authentication authentication){
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         // 1월 하수구 찾기
         int BlockCount = blockService.getJanBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
@@ -78,8 +82,11 @@ public class BlockController {
     }
 
     @GetMapping("block/2/sewer")
-    public ResponseEntity<?> Block2Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block2Sewer(Authentication authentication){
+        // 2월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getFebBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -87,8 +94,11 @@ public class BlockController {
 
     }
     @GetMapping("block/3/sewer")
-    public ResponseEntity<?> Block3Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block3Sewer(Authentication authentication){
+        // 3월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getMarBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -96,8 +106,11 @@ public class BlockController {
 
     }
     @GetMapping("block/4/sewer")
-    public ResponseEntity<?> Block4Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block4Sewer(Authentication authentication){
+        // 4월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getAprBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -105,8 +118,11 @@ public class BlockController {
 
     }
     @GetMapping("block/5/sewer")
-    public ResponseEntity<?> Block5Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block5Sewer(Authentication authentication){
+        // 5월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getMayBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -114,8 +130,11 @@ public class BlockController {
 
     }
     @GetMapping("block/6/sewer")
-    public ResponseEntity<?> Block6Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block6Sewer(Authentication authentication){
+        // 6월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getJunBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -123,8 +142,11 @@ public class BlockController {
 
     }
     @GetMapping("block/7/sewer")
-    public ResponseEntity<?> Block7Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block7Sewer(Authentication authentication){
+        // 7월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getJulyBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -132,8 +154,11 @@ public class BlockController {
 
     }
     @GetMapping("block/8/sewer")
-    public ResponseEntity<?> Block8Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block8Sewer(Authentication authentication){
+        // 8월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getAugBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -141,8 +166,11 @@ public class BlockController {
 
     }
     @GetMapping("block/9/sewer")
-    public ResponseEntity<?> Block9Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block9Sewer(Authentication authentication){
+        // 9월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getSepBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -150,8 +178,11 @@ public class BlockController {
 
     }
     @GetMapping("block/10/sewer")
-    public ResponseEntity<?> Block10Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block10Sewer(Authentication authentication){
+        // 10월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getOctBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -159,8 +190,11 @@ public class BlockController {
 
     }
     @GetMapping("block/11/sewer")
-    public ResponseEntity<?> Block11Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block11Sewer(Authentication authentication){
+        // 11월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getNovBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
@@ -168,14 +202,26 @@ public class BlockController {
 
     }
     @GetMapping("block/12/sewer")
-    public ResponseEntity<?> Block12Sewer(){
-        // 1월 하수구 찾기
+    public ResponseEntity<?> Block12Sewer(Authentication authentication){
+        // 12월 하수구 찾기
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
         int BlockCount = blockService.getDecBlockSewer();
         ResponseBlockMounthSewerDto responseBlockMounthSewerDto = ResponseBlockMounthSewerDto.builder()
                 .blockCount(BlockCount).build();
         return  ResponseEntity.ok().body(responseBlockMounthSewerDto);
 
     }
+
+    // 일정 시간 마다 요청이 오면 상태값 반환
+    @GetMapping("/lookup/block/{lat}/{lon}")
+    public ResponseEntity<?> LookUpBlock(@PathVariable(value = "lat") double lat, @PathVariable(value = "lon")double lon){
+        ResponseLookUpBlockDto responseLookUpBlockDto = blockService.LookUpBlock(lat,lon);
+        return ResponseEntity.ok().body(responseLookUpBlockDto);
+    }
+
+
 
 
     ///////////////////////////////////////////////////////////////////////
