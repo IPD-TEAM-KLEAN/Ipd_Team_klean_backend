@@ -20,20 +20,13 @@ public class BlockRepositoryImpl implements BlockRepositoryCustom {
         this.queryFactory = queryFactory;
     }
 
-    private BooleanExpression eqStateRed(String state){
-        if(StringUtils.isEmpty(state)){
-            return null;
-        }
-        System.out.println(block.States);
-        return block.States.eq("red");
+    private BooleanExpression eqState(){
+
+        return block.States.eq("Active");
     }
-    private BooleanExpression eqStateOrange(String state){
-        if(StringUtils.isEmpty(state)){
-            return null;
-        }
-        System.out.println(state);
-        return block.States.eq("orange");
-    }
+
+
+    /////////////////////////////////////////////////
 
     //1~12 월
     private BooleanExpression NEJan(){
@@ -80,17 +73,15 @@ public class BlockRepositoryImpl implements BlockRepositoryCustom {
 
 
 
-    @Override
-    public List<Block> getStateActiveSewerRed(String status) {
-        return (List<Block>) queryFactory.from(block).where(eqStateRed(status)).fetch();
-    }
 
 
 
     @Override
-    public List<Block> getStateActiveSewerOrange(String status) {
-        return (List<Block>) queryFactory.from(block).where(eqStateOrange(status)).fetch();
+    public List<Block> getActiveBlock() {
+        return (List<Block>) queryFactory.from(block).where(eqState()).fetch();
     }
+
+
 
     @Override
     public List<Block> getBlockJanSewer() {

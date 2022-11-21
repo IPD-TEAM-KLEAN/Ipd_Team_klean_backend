@@ -1,9 +1,15 @@
 package com.example.ipd_team_klean.Service;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.BlockRequestDTO.RequestUpdateSewerBlockDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseActiveBlockListDTO;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseBlockInfoDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseLookUpBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseUpdateBlockSewerDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
 import com.example.ipd_team_klean.Entity.Block;
 import com.example.ipd_team_klean.Entity.Sewer;
+import com.example.ipd_team_klean.Error.CustomException;
+import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Repository.BlockRepository.BlockRepository;
 import com.example.ipd_team_klean.Repository.SewerRepository.SewerRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,16 +28,16 @@ public class BlockService {
     private final SewerRepository sewerRepository;
 
 
-    public ResponseUpdateBlockSewerDto UpdateSewer(RequestUpdateSewerBlockDto requestUpdateSewerDto) throws Exception {
+    public ResponseUpdateBlockSewerDto UpdateSewer(RequestUpdateSewerBlockDto requestUpdateSewerDto) throws Throwable {
         // 위도 경도 하수구 찾기
-        Sewer findsewer = sewerRepository.findByLatAndLon(requestUpdateSewerDto.getLatitude(),requestUpdateSewerDto.getLongitude());
+        Sewer findsewer =  sewerRepository.findByLatAndLon(requestUpdateSewerDto.getLatitude(),requestUpdateSewerDto.getLongitude()); // 위도 경도 찾기
 
-        // 초록 -> 빨간 일시
-        if(findsewer.getBlock().getStates().equals("green")){ // 현상태가 초록
-            if(requestUpdateSewerDto.getState().equals("orange") || requestUpdateSewerDto.getState().equals("red")){ // 입력 상태가 주황색일시
+
+        if(findsewer.getBlock().getStates().equals("Disable")){ // 전값이 disable이고 현재 오는 값이 active일시
+            if(requestUpdateSewerDto.getState().equals("Active")){
+                findsewer.setState("Active");
                 findsewer.getBlock().setStates(requestUpdateSewerDto.getState()); // 초록 -> 주황
                 findsewer.getBlock().setBlockCount(findsewer.getBlock().getBlockCount()+1); // 막힌 상태는 현 상태 +1
-                // 월 구하기
                 LocalDate nowmonth = LocalDate.now();
                 if (nowmonth.getMonthValue()==1){
                     findsewer.getBlock().setJan_Count(findsewer.getBlock().getJuly_Count()+1);
@@ -61,30 +68,18 @@ public class BlockService {
 
                 findsewer.getBlock().setBlockDate(LocalDate.now()); // 막힌 날짜
                 findsewer.getBlock().setBlockTime(LocalTime.now()); // 막힌 시간
-
             }
-        } else if (findsewer.getBlock().getStates().equals("orange")  ) {
-            // 주-> 초록
-            if(requestUpdateSewerDto.getState().equals("green")){
-                findsewer.getBlock().setStates(requestUpdateSewerDto.getState());
-
-            }
-
-            if(requestUpdateSewerDto.getState().equals("red")){
-                findsewer.getBlock().setStates(requestUpdateSewerDto.getState());
-            }
-
-
-        } else if (findsewer.getBlock().getStates().equals("red")) {
-            if(requestUpdateSewerDto.getState().equals("green")){
-                findsewer.getDeclaration().setDeclaration_Count(0);
-                findsewer.getBlock().setStates(requestUpdateSewerDto.getState());
-
-            }
-
-        } else{
-            throw new Exception("값이 아님");
         }
+        if(findsewer.getBlock().getStates().equals( "Active")){
+            if(requestUpdateSewerDto.getState().equals("Disable")){
+                findsewer.getBlock().setStates("Disable"); // 블록 센서 disable 처리하기
+                if(findsewer.getSmall_sensor().getStates().equals("Disable") && findsewer.getTh_sensor().getHStates().equals("Disable") && findsewer.getTh_sensor().getTStates().equals("Disable")){
+                    findsewer.setState("Disable");
+                }
+
+            }
+        }
+
         sewerRepository.save(findsewer);
 
         ResponseUpdateBlockSewerDto responseUpdateSewerDto = ResponseUpdateBlockSewerDto.builder()
@@ -108,14 +103,63 @@ public class BlockService {
         return responseUpdateSewerDto;
     }
 
+    public ResponseBlockInfoDto BlockInfo(int id) throws Throwable {
+        // 해당 하수구 찾기
+        Sewer findsewer = (Sewer) sewerRepository.findById(id).orElseThrow(()-> new CustomException("",ErrorCode.NotFoundUserException));
 
-    public List<Block> ListActiveStateOrage(String state){
-        return blockRepository.getStateActiveSewerOrange(state);
+        ResponseBlockInfoDto responseBlockInfoDto = ResponseBlockInfoDto
+                .builder()
+                .state(findsewer.getBlock().getStates())
+                .blockCount(findsewer.getBlock().getBlockCount())
+                .jan(findsewer.getBlock().getJan_Count())
+                .feb(findsewer.getBlock().getFeb_Count())
+                .apr(findsewer.getBlock().getApr_Count())
+                .may(findsewer.getBlock().getMay_Count())
+                .jun(findsewer.getBlock().getJun_Count())
+                .july(findsewer.getBlock().getJuly_Count())
+                .aug(findsewer.getBlock().getAug_Count())
+                .sep(findsewer.getBlock().getSep_Count())
+                .oct(findsewer.getBlock().getOct_Count())
+                .nov(findsewer.getBlock().getNov_Count())
+                .dec(findsewer.getBlock().getDec_Count())
+                .blockDate(findsewer.getBlock().getBlockDate())
+                .blockTime(findsewer.getBlock().getBlockTime())
+                .build();
+        return responseBlockInfoDto;
     }
-    // 빨간하수구 전체 리스트 얻기
-    public List<Block> ListActiveStateRed(String state){
-        return blockRepository.getStateActiveSewerRed(state);
+
+
+    public  List<ResponseActiveSewerListDto> ListActiveBlock(){
+        List<Block> blocks =  blockRepository.getActiveBlock();
+
+        List<ResponseActiveSewerListDto> responseActiveSewerListDtos = new ArrayList<>();
+
+        for(Block block : blocks){
+            ResponseActiveSewerListDto responseActiveSewerListDto  = ResponseActiveSewerListDto.builder()
+                    .longtitude(block.getSewer().getLon())
+                    .latitude(block.getSewer().getLat())
+                    .state(block.getStates())
+                    .address_name(block.getSewer().getAddress_name())
+                    .region_name(block.getSewer().getRegion_name())
+                    .build();
+            responseActiveSewerListDtos.add(responseActiveSewerListDto);
+
+        }
+
+        return responseActiveSewerListDtos;
     }
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////
+
+
     public int getJanBlockSewer( ){
         // 1월이 0이아닌 하수구를 구해서
         List<Block> blocks = blockRepository.getBlockJanSewer();
@@ -235,6 +279,17 @@ public class BlockService {
             totalDec = totalDec + block.getDec_Count();
         }
         return  totalDec;
+    }
+
+    public ResponseLookUpBlockDto LookUpBlock(double lat, double lon){
+
+        Sewer findSewer = sewerRepository.findByLatAndLon(lat, lon);
+        ResponseLookUpBlockDto responseLookUpBlockDto = ResponseLookUpBlockDto.builder()
+                .state(findSewer.getBlock().getStates())
+                .build();
+
+        return responseLookUpBlockDto;
+
     }
 
 
