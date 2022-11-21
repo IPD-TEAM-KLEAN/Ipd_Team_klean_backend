@@ -9,12 +9,20 @@ import lombok.NoArgsConstructor;
 public class RequestCreateSewerDto {
     private double latitude;
     private double longitude;
-    private String state;
+
+    private String blcokstate;
+    private  String smallstate;
+    private  String tstate;
+    private  String hstate;
 
     @Builder
-    public RequestCreateSewerDto(double latitude, double longitude, String state) {
+
+    public RequestCreateSewerDto(double latitude, double longitude, String blcokstate, String smallstate, String tstate, String hstate) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.state = state;
+        this.blcokstate = blcokstate;
+        this.smallstate = smallstate;
+        this.tstate = tstate;
+        this.hstate = hstate;
     }
 }

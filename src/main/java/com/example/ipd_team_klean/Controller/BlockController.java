@@ -1,19 +1,20 @@
 package com.example.ipd_team_klean.Controller;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.BlockRequestDTO.RequestUpdateSewerBlockDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseBlockInfoDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseUpdateBlockSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseBlockListCountSewerDTO;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseBlockMounthSewerDto;
 import com.example.ipd_team_klean.Entity.Block;
 import com.example.ipd_team_klean.Entity.Sewer;
+import com.example.ipd_team_klean.Error.CustomException;
+import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Service.BlockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +28,8 @@ public class BlockController {
     private  final BlockService blockService;
 
     // 위도 경도 상태를 받아서
-    @PutMapping("/update/sewer")
-    public ResponseEntity<?> UpdateSewer(@RequestBody RequestUpdateSewerBlockDto requestUpdateSewerDto) throws Exception {
+    @PutMapping("/update/block")
+    public ResponseEntity<?> UpdateSewer(@RequestBody RequestUpdateSewerBlockDto requestUpdateSewerDto) throws Throwable {
         ResponseUpdateBlockSewerDto blcoksewer = blockService.UpdateSewer(requestUpdateSewerDto);
 
         return ResponseEntity.ok().body(blcoksewer);
@@ -36,26 +37,35 @@ public class BlockController {
 
     }
 
+    @GetMapping("/info/block/{id}")
+    public ResponseEntity<?> BlockInfo(@PathVariable(value = "id")int id, Authentication authentication) throws Throwable {
+
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
+        ResponseBlockInfoDto responseBlockInfoDto = blockService.BlockInfo(id);
+
+        return ResponseEntity.ok().body(responseBlockInfoDto);
+
+    }
+
 
     @GetMapping("/active/state/list/sewer")
-    public ResponseEntity<?> ActiveStateSewer(){
-        List<ResponseActiveSewerListDto> responseActiveSewerListDtos = findActiveSewer();
-        Map<String, Object> result = new HashMap<>();
-        result.put("data", responseActiveSewerListDtos);
+    public ResponseEntity<?> ActiveStateSewer(Authentication authentication){
+
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
+
+        List<ResponseActiveSewerListDto> responseActiveSewerListDtos = blockService.ListActiveBlock();
         return ResponseEntity.ok().body(responseActiveSewerListDtos);
 
 
     }
-    @GetMapping("/block/list/count/sewer")
-    public ResponseEntity<?> BlockListCountSewer(){
-        List<ResponseActiveSewerListDto> responseActiveSewerListDtos = findActiveSewer();
-        int num = responseActiveSewerListDtos.size();
-        ResponseBlockListCountSewerDTO responseBlockListCountSewerDTO = ResponseBlockListCountSewerDTO.builder().num(num).build();
-
-        return  ResponseEntity.ok().body(responseBlockListCountSewerDTO);
 
 
-    }
+
+
     // 월별 막힌 횟수 받기
     @GetMapping("block/1/sewer")
     public ResponseEntity<?> Block1Sewer(){
@@ -168,46 +178,6 @@ public class BlockController {
     }
 
 
+    ///////////////////////////////////////////////////////////////////////
 
-    // 메소드 하수구 전체 리스크 보기 및 하수구 전체 리스트 개수 확인시 사용
-    public List<ResponseActiveSewerListDto> findActiveSewer(){
-        List<Block> orangeSewers = blockService.ListActiveStateOrage("orange");// 분홍일시 하수구 얻기
-        List<Block> redSewers = blockService.ListActiveStateRed("red");// 빨강 하수구 얻기
-
-
-
-        List<ResponseActiveSewerListDto> responseActiveSewerListDtos = new ArrayList<>();
-
-//        for(Sewer sewer :redSewers){
-//            ResponseActiveSewerListDto responseActiveSewerListDto = ResponseActiveSewerListDto.builder()
-//                    .latitude(sewer.getLat())
-//                    .longtitude(sewer.getLon())
-//                    .build();
-//            responseActiveSewerListDtos.add(responseActiveSewerListDto);
-//
-//        }
-        for(Block block : orangeSewers){
-            ResponseActiveSewerListDto responseActiveSewerListDto = ResponseActiveSewerListDto.builder()
-                    .longtitude(block.getSewer().getLon())
-                    .latitude(block.getSewer().getLat())
-                    .state(block.getStates())
-                    .address_name(block.getSewer().getAddress_name())
-                    .region_name(block.getSewer().getRegion_name())
-                    .build();
-            responseActiveSewerListDtos.add(responseActiveSewerListDto);
-        }
-        for(Block block : redSewers){
-            ResponseActiveSewerListDto responseActiveSewerListDto = ResponseActiveSewerListDto.builder()
-                    .longtitude(block.getSewer().getLon())
-                    .latitude(block.getSewer().getLat())
-                    .state(block.getStates())
-                    .address_name(block.getSewer().getAddress_name())
-                    .region_name(block.getSewer().getRegion_name())
-                    .build();
-            responseActiveSewerListDtos.add(responseActiveSewerListDto);
-        }
-
-        return responseActiveSewerListDtos;
-
-    }
 }

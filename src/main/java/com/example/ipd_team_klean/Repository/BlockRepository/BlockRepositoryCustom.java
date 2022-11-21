@@ -6,8 +6,11 @@ import com.example.ipd_team_klean.Entity.Sewer;
 import java.util.List;
 
 public interface BlockRepositoryCustom {
-    List<Block> getStateActiveSewerOrange(String status);
-    List<Block> getStateActiveSewerRed(String status);
+
+
+    List<Block> getActiveBlock();
+
+
 
     List<Block> getBlockJanSewer( );
     List<Block> getBlockFebSewer( );

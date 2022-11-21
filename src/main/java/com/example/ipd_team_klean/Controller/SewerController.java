@@ -1,20 +1,18 @@
 package com.example.ipd_team_klean.Controller;
 
-import com.example.ipd_team_klean.DTO.RequestDTO.SewerRequestDTO.RequestBlockSewerInfo;
 import com.example.ipd_team_klean.DTO.RequestDTO.SewerRequestDTO.RequestCreateSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.*;
-import com.example.ipd_team_klean.Entity.Sewer;
+import com.example.ipd_team_klean.Error.CustomException;
+import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Service.SewerService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,35 +35,31 @@ public class SewerController {
     // 막힌 하수구 전체 리스트 보기
 
 
+    @GetMapping("/active/sewer")
+    public ResponseEntity<?>  ActiveSewerList(Authentication authentication){
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
 
-    @GetMapping("block/sewer/info")
-    public  ResponseEntity<?> BlockSewerInfo(@RequestBody RequestBlockSewerInfo requestBlockSewerInfo){
-        Sewer sewer = sewerService.findSewer(requestBlockSewerInfo.getLatitude(),requestBlockSewerInfo.getLongitude());
+        List<ResponseActiveSewerListDto> responseActiveSewerListDtos  = sewerService.getStateActiveSewer();
 
-        ResponseBlockSewerInfo responseBlockSewerInfo = ResponseBlockSewerInfo.builder()
-                .latitude(sewer.getLat())
-                .longtitude(sewer.getLon())
-                .state(sewer.getBlock().getStates())
-                .blockCount(sewer.getBlock().getBlockCount())
-                .jan(sewer.getBlock().getJan_Count())
-                .feb(sewer.getBlock().getFeb_Count())
-                .mar(sewer.getBlock().getMar_Count())
-                .apr(sewer.getBlock().getApr_Count())
-                .may(sewer.getBlock().getMay_Count())
-                .jun(sewer.getBlock().getJun_Count())
-                .july(sewer.getBlock().getJuly_Count())
-                .aug(sewer.getBlock().getAug_Count())
-                .sep(sewer.getBlock().getSep_Count())
-                .oct(sewer.getBlock().getOct_Count())
-                .nov(sewer.getBlock().getNov_Count())
-                .dec(sewer.getBlock().getDec_Count())
-                .blockDate(sewer.getBlock().getBlockDate())
-                .blockTime(sewer.getBlock().getBlockTime())
-                .address_name(sewer.getAddress_name())
-                .region_name(sewer.getRegion_name())
-                .accumulate_Count(sewer.getDeclaration().getAccumulate_Count())
-                .build();
-        return ResponseEntity.ok().body(responseBlockSewerInfo);
+        return  ResponseEntity.ok().body(responseActiveSewerListDtos);
+
+    }
+
+
+
+    @GetMapping("active/sewer/info/{id}")
+    public  ResponseEntity<?> BlockSewerInfo(Authentication authentication, @PathVariable(value = "id") int id) throws Throwable {
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
+
+
+        ResponseSewerInfo sewer = sewerService.findSewer(id);
+
+
+        return ResponseEntity.ok().body(sewer);
     }
 
 

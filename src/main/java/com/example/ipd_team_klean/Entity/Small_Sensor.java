@@ -10,8 +10,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class Block {
-
+public class Small_Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
@@ -19,13 +18,16 @@ public class Block {
 
     @Column(nullable = false,name = "States")
     @Setter
-    private  String States;  //  상태
+    private  String States;  // 상태
+
+
+
     @Column(nullable = false)
     @Setter
-    private  int BlockCount;  // 총 막힌 숫자
+    private  int SmallCount; // 총 냄새 숫자
 
 
-    // 월별 막힌 숫자
+    // 월별 냄새 숫자
     @Column(nullable = false)
     @Setter
     private int Jan_Count;
@@ -63,19 +65,19 @@ public class Block {
     @Setter
     private int Dec_Count;
     @Setter
-    private LocalDate BlockDate;
+    private LocalDate SmallDate;
     @Setter
-    private LocalTime BlockTime;
-
+    private LocalTime SmallTime;
 
     @OneToOne
     @JoinColumn(name ="sewer_id")
-    private Sewer sewer;
+    private Sewer sewer; // 하수구와 일대일 관계
+
 
     @Builder
-    public Block(String states, int blockCount, int jan_Count, int feb_Count, int mar_Count, int apr_Count, int may_Count, int jun_Count, int july_Count, int aug_Count, int sep_Count, int oct_Count, int nov_Count, int dec_Count, LocalDate blockDate, LocalTime blockTime, Sewer sewer) {
+    public Small_Sensor(String states, int smallCount, int jan_Count, int feb_Count, int mar_Count, int apr_Count, int may_Count, int jun_Count, int july_Count, int aug_Count, int sep_Count, int oct_Count, int nov_Count, int dec_Count, LocalDate smallDate, LocalTime smallTime, Sewer sewer) {
         States = states;
-        BlockCount = blockCount;
+        SmallCount = smallCount;
         Jan_Count = jan_Count;
         Feb_Count = feb_Count;
         Mar_Count = mar_Count;
@@ -88,8 +90,8 @@ public class Block {
         Oct_Count = oct_Count;
         Nov_Count = nov_Count;
         Dec_Count = dec_Count;
-        BlockDate = blockDate;
-        BlockTime = blockTime;
+        SmallDate = smallDate;
+        SmallTime = smallTime;
         this.sewer = sewer;
     }
 }

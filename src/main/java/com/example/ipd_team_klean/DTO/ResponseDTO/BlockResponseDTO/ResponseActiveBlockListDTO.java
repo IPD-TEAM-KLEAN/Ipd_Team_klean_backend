@@ -1,4 +1,4 @@
-package com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO;
+package com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class ResponseActiveSewerListDto {
-
+public class ResponseActiveBlockListDTO {
     private  int id;
     private  double Latitude;
     private  double Longtitude;
@@ -19,7 +18,7 @@ public class ResponseActiveSewerListDto {
 
     @Builder
 
-    public ResponseActiveSewerListDto(int id ,double latitude, double longtitude, String state, String address_name, String region_name) {
+    public ResponseActiveBlockListDTO(int id,double latitude, double longtitude, String state, String address_name, String region_name) {
         this.id = id;
         Latitude = latitude;
         Longtitude = longtitude;

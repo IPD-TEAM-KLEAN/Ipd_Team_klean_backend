@@ -11,11 +11,14 @@ import java.util.List;
 @Repository
 @Transactional
 public interface BlockRepository extends JpaRepository<Block, Integer> , BlockRepositoryCustom{
-    @Override
-    List<Block> getStateActiveSewerOrange(String status);
+
 
     @Override
-    List<Block> getStateActiveSewerRed(String status);
+    List<Block> getActiveBlock();
+
+
+    /////////////////////////////////////
+
 
     @Override
     List<Block> getBlockJanSewer();

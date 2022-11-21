@@ -31,18 +31,32 @@ public class Sewer {
     @Column(nullable = false)
     private String Region_name;
 
-    @OneToOne(mappedBy = "sewer")
-    private  Block block;
+    @Setter
+    @Column(  nullable = false)
+    private  String state;
 
     @OneToOne(mappedBy = "sewer")
-    private  Declaration declaration;
+    private  Block block; // 막힘과
+
+    @OneToOne(mappedBy = "sewer")
+    private Small_Sensor small_sensor; //  냄새 와 일대일 관계
+
+    @OneToOne(mappedBy = "sewer")
+    private TH_Sensor th_sensor; // 온습도 센서와 일대일 관계
+
+
+
+
+
     @Builder
 
-    public Sewer(Double latitude, Double longitude, String address_name, String region_name, Block block) {
+    public Sewer(Double latitude, Double longitude, String address_name, String region_name, Block block, String state) {
         this.lat = latitude;
         lon = longitude;
         Address_name = address_name;
         Region_name = region_name;
         this.block = block;
+        this.state = state;
+
     }
 }
