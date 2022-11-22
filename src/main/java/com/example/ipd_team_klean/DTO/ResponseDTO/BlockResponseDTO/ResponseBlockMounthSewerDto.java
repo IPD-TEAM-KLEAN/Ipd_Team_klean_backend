@@ -1,4 +1,4 @@
-package com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO;
+package com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO;
 
 import lombok.Builder;
 import lombok.Getter;

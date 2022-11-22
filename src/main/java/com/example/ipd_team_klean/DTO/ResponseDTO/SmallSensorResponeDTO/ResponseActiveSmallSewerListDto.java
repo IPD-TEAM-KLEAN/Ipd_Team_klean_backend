@@ -1,4 +1,4 @@
-package com.example.ipd_team_klean.DTO.ResponseDTO.DeclarationDTO;
+package com.example.ipd_team_klean.DTO.ResponseDTO.SmallSensorResponeDTO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,25 +6,24 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class DeclarationGetDTO {
+public class ResponseActiveSmallSewerListDto {
+    private  int id;
     private  double Latitude;
     private  double Longtitude;
 
+    private  String State;
     private String Address_name;
 
     private String Region_name;
 
-    private  int Declaration_Count;
-    private  String State;
-
 
     @Builder
-    public DeclarationGetDTO(double latitude, double longtitude, String address_name, String region_name, int declaration_Count, String state) {
+    public ResponseActiveSmallSewerListDto(int id, double latitude, double longtitude, String state, String address_name, String region_name) {
+        this.id = id;
         Latitude = latitude;
         Longtitude = longtitude;
+        State = state;
         Address_name = address_name;
         Region_name = region_name;
-        Declaration_Count = declaration_Count;
-        State = state;
     }
 }

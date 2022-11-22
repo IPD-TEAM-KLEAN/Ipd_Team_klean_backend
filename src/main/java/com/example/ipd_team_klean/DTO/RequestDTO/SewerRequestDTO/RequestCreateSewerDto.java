@@ -10,17 +10,17 @@ public class RequestCreateSewerDto {
     private double latitude;
     private double longitude;
 
-    private String blcokstate;
+    private String blockstate;
     private  String smallstate;
     private  String tstate;
     private  String hstate;
 
     @Builder
 
-    public RequestCreateSewerDto(double latitude, double longitude, String blcokstate, String smallstate, String tstate, String hstate) {
+    public RequestCreateSewerDto(double latitude, double longitude, String blockstate, String smallstate, String tstate, String hstate) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.blcokstate = blcokstate;
+        this.blockstate = blockstate;
         this.smallstate = smallstate;
         this.tstate = tstate;
         this.hstate = hstate;

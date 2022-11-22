@@ -1,10 +1,7 @@
 package com.example.ipd_team_klean.Service;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.BlockRequestDTO.RequestUpdateSewerBlockDto;
-import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseActiveBlockListDTO;
-import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseBlockInfoDto;
-import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseLookUpBlockDto;
-import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseUpdateBlockSewerDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.*;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
 import com.example.ipd_team_klean.Entity.Block;
 import com.example.ipd_team_klean.Entity.Sewer;
@@ -134,8 +131,10 @@ public class BlockService {
 
         List<ResponseActiveSewerListDto> responseActiveSewerListDtos = new ArrayList<>();
 
+        // 아이디는 하수구 아이디 반환
         for(Block block : blocks){
             ResponseActiveSewerListDto responseActiveSewerListDto  = ResponseActiveSewerListDto.builder()
+                    .id(block.getSewer().getId())
                     .longtitude(block.getSewer().getLon())
                     .latitude(block.getSewer().getLat())
                     .state(block.getStates())
@@ -289,6 +288,37 @@ public class BlockService {
                 .build();
 
         return responseLookUpBlockDto;
+
+    }
+
+
+    public ResponseQuarterBlockDto QurterBlock(){
+
+        List<Block> findallBlocks = blockRepository.findAll();
+
+          int firstquarter = 0;
+          int secondquarter =0;
+          int thirdquarter =0;
+          int fourthquarter =0;
+
+
+          for(Block block : findallBlocks){
+              firstquarter +=  block.getJan_Count() + block.getFeb_Count()+ block.getMar_Count();
+              secondquarter += block.getApr_Count() + block.getMay_Count() + block.getJun_Count() ;
+              thirdquarter += block.getJuly_Count() + block.getAug_Count() + block.getSep_Count();
+              fourthquarter += block.getOct_Count() + block.getNov_Count() +block.getDec_Count();
+
+          }
+          ResponseQuarterBlockDto responseQuarterBlockDto = ResponseQuarterBlockDto.builder()
+                  .firstquarter(firstquarter)
+                  .secondquarter(secondquarter)
+                  .thirdquarter(thirdquarter)
+                  .fourthquarter(fourthquarter)
+                  .build();
+          return  responseQuarterBlockDto;
+
+
+
 
     }
 

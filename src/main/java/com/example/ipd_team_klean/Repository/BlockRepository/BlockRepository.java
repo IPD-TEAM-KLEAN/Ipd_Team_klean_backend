@@ -12,6 +12,7 @@ import java.util.List;
 @Transactional
 public interface BlockRepository extends JpaRepository<Block, Integer> , BlockRepositoryCustom{
 
+    List<Block> findAll();
 
     @Override
     List<Block> getActiveBlock();
