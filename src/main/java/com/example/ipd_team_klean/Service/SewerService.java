@@ -1,9 +1,11 @@
 package com.example.ipd_team_klean.Service;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.SewerRequestDTO.RequestCreateSewerDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseLookUpBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseSewerInfo;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseCreateSewerDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.SmallSensorResponeDTO.ResponseLookUpSmallDto;
 import com.example.ipd_team_klean.Entity.Block;
 import com.example.ipd_team_klean.Entity.Sewer;
 import com.example.ipd_team_klean.Entity.Small_Sensor;
@@ -60,7 +62,7 @@ public class SewerService {
                 .build();
 
         Block block = Block.builder()
-                .states(requestCreateSewerDto.getBlcokstate())
+                .states(requestCreateSewerDto.getBlockstate())
                 .blockCount(0)
                 .jan_Count(0)
                 .feb_Count(0)
@@ -169,12 +171,15 @@ public class SewerService {
         ResponseSewerInfo responseBlockSewerInfo = ResponseSewerInfo.builder()
                 .latitude(sewer.getLat())
                 .longtitude(sewer.getLon())
-                .state(sewer.getBlock().getStates())
+                .state(sewer.getState())
                 .address_name(sewer.getAddress_name())
                 .region_name(sewer.getRegion_name())
                 .build();
         return responseBlockSewerInfo;
     }
+
+
+
 
 
 

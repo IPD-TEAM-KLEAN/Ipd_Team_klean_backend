@@ -3,12 +3,10 @@ package com.example.ipd_team_klean.Controller;
 import com.example.ipd_team_klean.DTO.RequestDTO.BlockRequestDTO.RequestUpdateSewerBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseBlockInfoDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseLookUpBlockDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseQuarterBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseUpdateBlockSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
-import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseBlockListCountSewerDTO;
-import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseBlockMounthSewerDto;
-import com.example.ipd_team_klean.Entity.Block;
-import com.example.ipd_team_klean.Entity.Sewer;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseBlockMounthSewerDto;
 import com.example.ipd_team_klean.Error.CustomException;
 import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Service.BlockService;
@@ -17,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,7 +46,7 @@ public class BlockController {
     }
 
 
-    @GetMapping("/active/state/list/sewer")
+    @GetMapping("/active/blockstate/list/sewer")
     public ResponseEntity<?> ActiveStateSewer(Authentication authentication){
 
         if(authentication == null){
@@ -201,6 +196,8 @@ public class BlockController {
         return  ResponseEntity.ok().body(responseBlockMounthSewerDto);
 
     }
+
+
     @GetMapping("block/12/sewer")
     public ResponseEntity<?> Block12Sewer(Authentication authentication){
         // 12월 하수구 찾기
@@ -214,6 +211,8 @@ public class BlockController {
 
     }
 
+
+
     // 일정 시간 마다 요청이 오면 상태값 반환
     @GetMapping("/lookup/block/{lat}/{lon}")
     public ResponseEntity<?> LookUpBlock(@PathVariable(value = "lat") double lat, @PathVariable(value = "lon")double lon){
@@ -222,8 +221,18 @@ public class BlockController {
     }
 
 
+    // 분기 별로 보기
+    @GetMapping("/quarter/block/sewer")
+    public ResponseEntity<?> QuarterBlock(Authentication authentication){
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
+
+        ResponseQuarterBlockDto responseQuarterBlockDto = blockService.QurterBlock();
+        return ResponseEntity.ok().body(responseQuarterBlockDto);
+
+    }
 
 
     ///////////////////////////////////////////////////////////////////////
-
 }
