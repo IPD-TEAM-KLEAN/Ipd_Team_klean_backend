@@ -63,7 +63,7 @@ public class SewerService {
                 .build();
 
         Block block = Block.builder()
-                .states(requestCreateSewerDto.getBlockstate())
+                .states("Disable")
                 .blockCount(0)
                 .jan_Count(0)
                 .feb_Count(0)
@@ -80,7 +80,7 @@ public class SewerService {
                 .build();
 
         Small_Sensor small = Small_Sensor.builder()
-                .states(requestCreateSewerDto.getSmallstate())
+                .states("Disable")
                 .smallCount(0)
                 .jan_Count(0)
                 .feb_Count(0)
@@ -96,7 +96,6 @@ public class SewerService {
                 .sewer(sewer)
                 .build();
 
-        System.out.println(requestCreateSewerDto.getTstate());
         TH_Sensor th = TH_Sensor.builder()
                 .value(0)
                 .count(0)
