@@ -13,8 +13,8 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 public class ResponseCreateSewerDto {
-    private  double Latitude;
-    private  double Longtitude;
+    private  String Latitude;
+    private  String Longtitude;
 
     private String Address_name;
 
@@ -28,7 +28,7 @@ public class ResponseCreateSewerDto {
 
 
     @Builder
-    public ResponseCreateSewerDto(double latitude, double longtitude, String address_name, String region_name, Block block, Small_Sensor small_sensor, TH_Sensor th_sensor, String state) {
+    public ResponseCreateSewerDto(String latitude, String longtitude, String address_name, String region_name, Block block, Small_Sensor small_sensor, TH_Sensor th_sensor, String state) {
         Latitude = latitude;
         Longtitude = longtitude;
         Address_name = address_name;

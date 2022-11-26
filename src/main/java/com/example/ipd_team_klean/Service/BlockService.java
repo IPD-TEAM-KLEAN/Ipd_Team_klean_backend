@@ -25,80 +25,84 @@ public class BlockService {
     private final SewerRepository sewerRepository;
 
 
-    public ResponseUpdateBlockSewerDto UpdateSewer(RequestUpdateSewerBlockDto requestUpdateSewerDto) throws Throwable {
-        // 위도 경도 하수구 찾기
-        Sewer findsewer =  sewerRepository.findByLatAndLon(requestUpdateSewerDto.getLatitude(),requestUpdateSewerDto.getLongitude()); // 위도 경도 찾기
+    // changeblock 에서 변함
 
-
-        if(findsewer.getBlock().getStates().equals("Disable")){ // 전값이 disable이고 현재 오는 값이 active일시
-            if(requestUpdateSewerDto.getState().equals("Active")){
-                findsewer.setState("Active");
-                findsewer.getBlock().setStates(requestUpdateSewerDto.getState()); // 초록 -> 주황
-                findsewer.getBlock().setBlockCount(findsewer.getBlock().getBlockCount()+1); // 막힌 상태는 현 상태 +1
-                LocalDate nowmonth = LocalDate.now();
-                if (nowmonth.getMonthValue()==1){
-                    findsewer.getBlock().setJan_Count(findsewer.getBlock().getJuly_Count()+1);
-                }else if (nowmonth.getMonthValue()==2){
-                    findsewer.getBlock().setFeb_Count(findsewer.getBlock().getFeb_Count()+1);
-                } else if (nowmonth.getMonthValue()==3) {
-                    findsewer.getBlock().setMar_Count(findsewer.getBlock().getMar_Count()+1);
-                }else if (nowmonth.getMonthValue()==4) {
-                    findsewer.getBlock().setApr_Count(findsewer.getBlock().getApr_Count()+1);
-                }else if (nowmonth.getMonthValue()==5) {
-                    findsewer.getBlock().setMay_Count(findsewer.getBlock().getMay_Count()+1);
-                }else if (nowmonth.getMonthValue()==6) {
-                    findsewer.getBlock().setJun_Count(findsewer.getBlock().getJun_Count()+1);
-                }else if (nowmonth.getMonthValue()==7) {
-                    findsewer.getBlock().setJuly_Count(findsewer.getBlock().getJun_Count()+1);
-                }else if (nowmonth.getMonthValue()==8) {
-                    findsewer.getBlock().setAug_Count(findsewer.getBlock().getAug_Count()+1);
-                }else if (nowmonth.getMonthValue()==9) {
-                    findsewer.getBlock().setSep_Count(findsewer.getBlock().getSep_Count()+1);
-                }else if (nowmonth.getMonthValue()==10) {
-                    findsewer.getBlock().setOct_Count(findsewer.getBlock().getOct_Count()+1);
-
-                }else if (nowmonth.getMonthValue()==11) {
-                    findsewer.getBlock().setNov_Count(findsewer.getBlock().getNov_Count()+1);
-                }else if (nowmonth.getMonthValue()==12) {
-                    findsewer.getBlock().setDec_Count(findsewer.getBlock().getDec_Count()+1);
-                }
-
-                findsewer.getBlock().setBlockDate(LocalDate.now()); // 막힌 날짜
-                findsewer.getBlock().setBlockTime(LocalTime.now()); // 막힌 시간
-            }
-        }
-        if(findsewer.getBlock().getStates().equals( "Active")){
-            if(requestUpdateSewerDto.getState().equals("Disable")){
-                findsewer.getBlock().setStates("Disable"); // 블록 센서 disable 처리하기
-                if(findsewer.getSmall_sensor().getStates().equals("Disable") && findsewer.getTh_sensor().getHStates().equals("Disable") && findsewer.getTh_sensor().getTStates().equals("Disable")){
-                    findsewer.setState("Disable");
-                }
-
-            }
-        }
-
-        sewerRepository.save(findsewer);
-
-        ResponseUpdateBlockSewerDto responseUpdateSewerDto = ResponseUpdateBlockSewerDto.builder()
-                .state(findsewer.getBlock().getStates())
-                .blockCount(findsewer.getBlock().getBlockCount())
-                .jan(findsewer.getBlock().getJan_Count())
-                .feb(findsewer.getBlock().getFeb_Count())
-                .apr(findsewer.getBlock().getApr_Count())
-                .may(findsewer.getBlock().getMay_Count())
-                .jun(findsewer.getBlock().getJun_Count())
-                .july(findsewer.getBlock().getJuly_Count())
-                .aug(findsewer.getBlock().getAug_Count())
-                .sep(findsewer.getBlock().getSep_Count())
-                .oct(findsewer.getBlock().getOct_Count())
-                .nov(findsewer.getBlock().getNov_Count())
-                .dec(findsewer.getBlock().getDec_Count())
-                .blockDate(findsewer.getBlock().getBlockDate())
-                .blockTime(findsewer.getBlock().getBlockTime())
-                .build();
-
-        return responseUpdateSewerDto;
-    }
+//    public ResponseUpdateBlockSewerDto UpdateSewer(RequestUpdateSewerBlockDto requestUpdateSewerDto) throws Throwable {
+//        // 위도 경도 하수구 찾기
+//        Sewer findsewer =  sewerRepository.findByLatAndLon(requestUpdateSewerDto.getLatitude(),requestUpdateSewerDto.getLongitude()); // 위도 경도 찾기
+//
+//
+//        if(findsewer.getBlock().getStates().equals("Disable")){ // 전값이 disable이고 현재 오는 값이 active일시
+//            if(requestUpdateSewerDto.getState().equals("Active")){
+//                findsewer.setState("Active");
+//                findsewer.getBlock().setStates(requestUpdateSewerDto.getState()); // 초록 -> 주황
+//                findsewer.getBlock().setBlockCount(findsewer.getBlock().getBlockCount()+1); // 막힌 상태는 현 상태 +1
+//                LocalDate nowmonth = LocalDate.now();
+//                if (nowmonth.getMonthValue()==1){
+//                    findsewer.getBlock().setJan_Count(findsewer.getBlock().getJuly_Count()+1);
+//                }else if (nowmonth.getMonthValue()==2){
+//                    findsewer.getBlock().setFeb_Count(findsewer.getBlock().getFeb_Count()+1);
+//                } else if (nowmonth.getMonthValue()==3) {
+//                    findsewer.getBlock().setMar_Count(findsewer.getBlock().getMar_Count()+1);
+//                }else if (nowmonth.getMonthValue()==4) {
+//                    findsewer.getBlock().setApr_Count(findsewer.getBlock().getApr_Count()+1);
+//                }else if (nowmonth.getMonthValue()==5) {
+//                    findsewer.getBlock().setMay_Count(findsewer.getBlock().getMay_Count()+1);
+//                }else if (nowmonth.getMonthValue()==6) {
+//                    findsewer.getBlock().setJun_Count(findsewer.getBlock().getJun_Count()+1);
+//                }else if (nowmonth.getMonthValue()==7) {
+//                    findsewer.getBlock().setJuly_Count(findsewer.getBlock().getJun_Count()+1);
+//                }else if (nowmonth.getMonthValue()==8) {
+//                    findsewer.getBlock().setAug_Count(findsewer.getBlock().getAug_Count()+1);
+//                }else if (nowmonth.getMonthValue()==9) {
+//                    findsewer.getBlock().setSep_Count(findsewer.getBlock().getSep_Count()+1);
+//                }else if (nowmonth.getMonthValue()==10) {
+//                    findsewer.getBlock().setOct_Count(findsewer.getBlock().getOct_Count()+1);
+//
+//                }else if (nowmonth.getMonthValue()==11) {
+//                    findsewer.getBlock().setNov_Count(findsewer.getBlock().getNov_Count()+1);
+//                }else if (nowmonth.getMonthValue()==12) {
+//                    findsewer.getBlock().setDec_Count(findsewer.getBlock().getDec_Count()+1);
+//                }
+//
+//                findsewer.getBlock().setBlockDate(LocalDate.now()); // 막힌 날짜
+//                findsewer.getBlock().setBlockTime(LocalTime.now()); // 막힌 시간
+//            }
+//        }
+//
+//
+//        if(findsewer.getBlock().getStates().equals( "Active")){
+//            if(requestUpdateSewerDto.getState().equals("Disable")){
+//                findsewer.getBlock().setStates("Disable"); // 블록 센서 disable 처리하기
+//                if(findsewer.getSmall_sensor().getStates().equals("Disable") && findsewer.getTh_sensor().getHStates().equals("Disable") && findsewer.getTh_sensor().getTStates().equals("Disable")){
+//                    findsewer.setState("Disable");
+//                }
+//
+//            }
+//        }
+//
+//        sewerRepository.save(findsewer);
+//
+//        ResponseUpdateBlockSewerDto responseUpdateSewerDto = ResponseUpdateBlockSewerDto.builder()
+//                .state(findsewer.getBlock().getStates())
+//                .blockCount(findsewer.getBlock().getBlockCount())
+//                .jan(findsewer.getBlock().getJan_Count())
+//                .feb(findsewer.getBlock().getFeb_Count())
+//                .apr(findsewer.getBlock().getApr_Count())
+//                .may(findsewer.getBlock().getMay_Count())
+//                .jun(findsewer.getBlock().getJun_Count())
+//                .july(findsewer.getBlock().getJuly_Count())
+//                .aug(findsewer.getBlock().getAug_Count())
+//                .sep(findsewer.getBlock().getSep_Count())
+//                .oct(findsewer.getBlock().getOct_Count())
+//                .nov(findsewer.getBlock().getNov_Count())
+//                .dec(findsewer.getBlock().getDec_Count())
+//                .blockDate(findsewer.getBlock().getBlockDate())
+//                .blockTime(findsewer.getBlock().getBlockTime())
+//                .build();
+//
+//        return responseUpdateSewerDto;
+//    }
 
     public ResponseBlockInfoDto BlockInfo(int id) throws Throwable {
         // 해당 하수구 찾기
@@ -280,7 +284,7 @@ public class BlockService {
         return  totalDec;
     }
 
-    public ResponseLookUpBlockDto LookUpBlock(double lat, double lon){
+    public ResponseLookUpBlockDto LookUpBlock(String lat, String lon){
 
         Sewer findSewer = sewerRepository.findByLatAndLon(lat, lon);
         ResponseLookUpBlockDto responseLookUpBlockDto = ResponseLookUpBlockDto.builder()

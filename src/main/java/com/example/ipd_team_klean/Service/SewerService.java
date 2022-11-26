@@ -6,15 +6,13 @@ import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiv
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseSewerInfo;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseCreateSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SmallSensorResponeDTO.ResponseLookUpSmallDto;
-import com.example.ipd_team_klean.Entity.Block;
-import com.example.ipd_team_klean.Entity.Sewer;
-import com.example.ipd_team_klean.Entity.Small_Sensor;
-import com.example.ipd_team_klean.Entity.TH_Sensor;
+import com.example.ipd_team_klean.Entity.*;
 import com.example.ipd_team_klean.Error.CustomException;
 import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Repository.BlockRepository.BlockRepository;
 import com.example.ipd_team_klean.Repository.SewerRepository.SewerRepository;
 import com.example.ipd_team_klean.Repository.Small_SensorRepository.Small_SensorRepository;
+import com.example.ipd_team_klean.Repository.TH_SensorRepository.H_SensorRepository;
 import com.example.ipd_team_klean.Repository.TH_SensorRepository.TH_SensorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,6 +32,7 @@ public class SewerService {
     private  final Small_SensorRepository small_sensorRepository;
     private  final TH_SensorRepository th_sensorRepository;
 
+    private  final H_SensorRepository h_sensorRepository;
 
 
 
@@ -44,7 +43,9 @@ public class SewerService {
         }
         //System.out.println(requestCreateSewerDto.getLongitude());
         //System.out.println(requestCreateSewerDto.getLatitude());
-        Map<String, Object> map = locationService.getLocation(requestCreateSewerDto.getLongitude(),requestCreateSewerDto.getLatitude()).documents[0].address; // y 위도 latitude, x 경도 longitude
+        Double parseLong = Double.parseDouble(requestCreateSewerDto.getLongitude());
+        Double parseLat = Double.parseDouble(requestCreateSewerDto.getLatitude());
+        Map<String, Object> map = locationService.getLocation(parseLong,parseLat).documents[0].address; // y 위도 latitude, x 경도 longitude
 
        // System.out.println(map);
         Collection<Object> values = map.values();
@@ -97,41 +98,22 @@ public class SewerService {
 
         System.out.println(requestCreateSewerDto.getTstate());
         TH_Sensor th = TH_Sensor.builder()
-                .TStates(requestCreateSewerDto.getTstate())
-                .TCount(0)
-                .TJan_Count(0)
-                .TFeb_Count(0)
-                .TMar_Count(0)
-                .TApr_Count(0)
-                .TMay_Count(0)
-                .TJun_Count(0)
-                .TJuly_Count(0)
-                .TAug_Count(0)
-                .TSep_Count(0)
-                .TOct_Count(0)
-                .TNov_Count(0)
-                .HStates(requestCreateSewerDto.getHstate())
-                .HCount(0)
-                .HJan_Count(0)
-                .HFeb_Count(0)
-                .HMar_Count(0)
-                .HApr_Count(0)
-                .HMay_Count(0)
-                .HJun_Count(0)
-                .HJuly_Count(0)
-                .HAug_Count(0)
-                .HSep_Count(0)
-                .HOct_Count(0)
-                .HNov_Count(0)
+                .value(0)
+                .count(0)
                 .sewer(sewer)
                 .build();
 
-
+        H_Sensor h = H_Sensor.builder()
+                .value(0)
+                .count(0)
+                .sewer(sewer)
+                .build();
 
         sewerRepository.save(sewer);
         blockRepository.save(block);
         small_sensorRepository.save(small);
         th_sensorRepository.save(th);
+        h_sensorRepository.save(h);
 
 
         ResponseCreateSewerDto responseCreateSewerDto = ResponseCreateSewerDto.builder()

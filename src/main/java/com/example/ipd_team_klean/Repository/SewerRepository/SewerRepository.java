@@ -13,8 +13,8 @@ import java.util.Optional;
 public interface SewerRepository extends JpaRepository<Sewer, Integer>, SewerRepositoryCustom {
 
     // 위도 경도로 해당 하수구 찾기
-    Sewer findByLatAndLon(double lat, double lon);
-    Boolean existsByLatAndLon(double lat, double lon);
+    Sewer findByLatAndLon(String lat, String lon);
+    Boolean existsByLatAndLon(String lat, String lon);
 
     Optional findById(int id);
 
