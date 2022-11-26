@@ -14,6 +14,7 @@ public class Block {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "block_id")
     private  int id;
 
 

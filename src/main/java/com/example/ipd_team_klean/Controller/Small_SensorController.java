@@ -20,12 +20,14 @@ import java.util.List;
 public class Small_SensorController {
     final Small_SensorService small_sensorService;
 
-    @PutMapping("/update/small")
-    public ResponseEntity<?> UpdateSmall(@RequestBody RequestUpdateSewerSmallDto requestUpdateSewerSmallDto){
+    // changesmall 에서 실행함
 
-        ResponseUpdateSmallSewerDto responseUpdateSmallSewerDto = small_sensorService.UpdateSewer(requestUpdateSewerSmallDto);
-        return  ResponseEntity.ok().body(responseUpdateSmallSewerDto);
-    }
+//    @PutMapping("/update/small")
+//    public ResponseEntity<?> UpdateSmall(@RequestBody RequestUpdateSewerSmallDto requestUpdateSewerSmallDto){
+//
+//        ResponseUpdateSmallSewerDto responseUpdateSmallSewerDto = small_sensorService.UpdateSewer(requestUpdateSewerSmallDto);
+//        return  ResponseEntity.ok().body(responseUpdateSmallSewerDto);
+//    }
 
     @GetMapping("/info/small/{id}") // id 는 하수구 아이디
     public  ResponseEntity<?> SmallInco(@PathVariable(value = "id")int id, Authentication authentication) throws Throwable {
@@ -202,7 +204,7 @@ public class Small_SensorController {
     // 일정 시간 마다 요청 오면 상태값 체크
 
     @GetMapping("/lookup/small/{lat}/{lon}")
-    public ResponseEntity<?> LookUpBlock(@PathVariable(value = "lat") double lat, @PathVariable(value = "lon")double lon){
+    public ResponseEntity<?> LookUpBlock(@PathVariable(value = "lat") String lat, @PathVariable(value = "lon")String lon){
         ResponseLookUpSmallDto responseLookUpSmallDto = small_sensorService.LookUpSamll(lat,lon);
         return ResponseEntity.ok().body(responseLookUpSmallDto);
     }

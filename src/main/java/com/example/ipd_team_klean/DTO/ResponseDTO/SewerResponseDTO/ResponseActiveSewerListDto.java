@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 public class ResponseActiveSewerListDto {
 
     private  int id;
-    private  double Latitude;
-    private  double Longtitude;
+    private  String Latitude;
+    private  String Longtitude;
 
     private  String State;
     private String Address_name;
@@ -19,7 +19,7 @@ public class ResponseActiveSewerListDto {
 
     @Builder
 
-    public ResponseActiveSewerListDto(int id ,double latitude, double longtitude, String state, String address_name, String region_name) {
+    public ResponseActiveSewerListDto(int id ,String latitude, String longtitude, String state, String address_name, String region_name) {
         this.id = id;
         Latitude = latitude;
         Longtitude = longtitude;

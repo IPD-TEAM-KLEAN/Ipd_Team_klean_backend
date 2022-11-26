@@ -1,5 +1,7 @@
-package com.example.ipd_team_klean.DTO.RequestDTO.BlockRequestDTO;
+package com.example.ipd_team_klean.DTO.RequestDTO.ChnageThRequestDTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,22 +10,20 @@ import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @Getter
-// 상태 변화하면 해당 값 변경
-public class RequestUpdateSewerBlockDto {
-
+public class ChangeHRequestDto {
     @NotNull
     @NotEmpty
     private String latitude;
     @NotNull
     @NotEmpty
     private String longitude;
-    @NotNull
-    @NotEmpty
-    private String state;
+    private  double value;
 
-    public RequestUpdateSewerBlockDto(String latitude, String longitude, String state) {
+    @Builder
+
+    public ChangeHRequestDto(String latitude, String longitude, double value) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.state = state;
+        this.value = value;
     }
 }

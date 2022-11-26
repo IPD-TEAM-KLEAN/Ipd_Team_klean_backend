@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class RequestBlockSewerInfo {
-    private double latitude;
-    private double longitude;
+    private String latitude;
+    private String longitude;
 
     @Builder
-    public RequestBlockSewerInfo(double latitude, double longitude, String state) {
+    public RequestBlockSewerInfo(String latitude, String longitude, String state) {
         this.latitude = latitude;
         this.longitude = longitude;
     }

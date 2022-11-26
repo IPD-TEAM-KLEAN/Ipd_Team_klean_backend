@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ResponseActiveSmallSewerListDto {
     private  int id;
-    private  double Latitude;
-    private  double Longtitude;
+    private  String Latitude;
+    private  String Longtitude;
 
     private  String State;
     private String Address_name;
@@ -18,7 +18,7 @@ public class ResponseActiveSmallSewerListDto {
 
 
     @Builder
-    public ResponseActiveSmallSewerListDto(int id, double latitude, double longtitude, String state, String address_name, String region_name) {
+    public ResponseActiveSmallSewerListDto(int id, String latitude, String longtitude, String state, String address_name, String region_name) {
         this.id = id;
         Latitude = latitude;
         Longtitude = longtitude;

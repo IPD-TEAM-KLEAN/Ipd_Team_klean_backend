@@ -24,14 +24,15 @@ public class BlockController {
     private  final BlockService blockService;
 
     // 위도 경도 상태를 받아서
-    @PutMapping("/update/block")
-    public ResponseEntity<?> UpdateSewer(@RequestBody RequestUpdateSewerBlockDto requestUpdateSewerDto) throws Throwable {
-        ResponseUpdateBlockSewerDto blcoksewer = blockService.UpdateSewer(requestUpdateSewerDto);
-
-        return ResponseEntity.ok().body(blcoksewer);
-
-
-    }
+    // changeblock 에서 이루어짐
+//    @PutMapping("/update/block")
+//    public ResponseEntity<?> UpdateSewer(@RequestBody    RequestUpdateSewerBlockDto requestUpdateSewerDto) throws Throwable {
+//        ResponseUpdateBlockSewerDto blcoksewer = blockService.UpdateSewer(requestUpdateSewerDto);
+//
+//        return ResponseEntity.ok().body(blcoksewer);
+//
+//
+//    }
 
     @GetMapping("/info/block/{id}")
     public ResponseEntity<?> BlockInfo(@PathVariable(value = "id")int id, Authentication authentication) throws Throwable {
@@ -215,7 +216,7 @@ public class BlockController {
 
     // 일정 시간 마다 요청이 오면 상태값 반환
     @GetMapping("/lookup/block/{lat}/{lon}")
-    public ResponseEntity<?> LookUpBlock(@PathVariable(value = "lat") double lat, @PathVariable(value = "lon")double lon){
+    public ResponseEntity<?> LookUpBlock(@PathVariable(value = "lat") String lat, @PathVariable(value = "lon")String lon){
         ResponseLookUpBlockDto responseLookUpBlockDto = blockService.LookUpBlock(lat,lon);
         return ResponseEntity.ok().body(responseLookUpBlockDto);
     }

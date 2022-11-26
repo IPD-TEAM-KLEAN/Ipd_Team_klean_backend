@@ -11,8 +11,10 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Getter
 public class Small_Sensor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "smell_id")
     private  int id;
 
 

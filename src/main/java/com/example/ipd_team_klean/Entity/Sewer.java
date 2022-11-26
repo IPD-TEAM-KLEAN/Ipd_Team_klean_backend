@@ -17,9 +17,9 @@ public class Sewer {
     @Column(name = "sewer_id")
     private  int id;
     @Column(nullable = false)
-    private  double lat;
+    private  String lat;
     @Column(nullable = false)
-    private  double lon;
+    private  String lon;
 
     @Setter
     //@Column(nullable = false)
@@ -45,12 +45,16 @@ public class Sewer {
     private TH_Sensor th_sensor; // 온습도 센서와 일대일 관계
 
 
+    @OneToOne(mappedBy = "sewer")
+    private H_Sensor h_sensor; // 온습도 센서와 일대일 관계
+
+
 
 
 
     @Builder
 
-    public Sewer(Double latitude, Double longitude, String address_name, String region_name, Block block, String state) {
+    public Sewer(String latitude, String longitude, String address_name, String region_name, Block block, String state) {
         this.lat = latitude;
         lon = longitude;
         Address_name = address_name;

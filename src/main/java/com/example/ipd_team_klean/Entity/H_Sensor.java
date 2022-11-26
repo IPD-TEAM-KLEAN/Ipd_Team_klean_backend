@@ -1,55 +1,47 @@
 package com.example.ipd_team_klean.Entity;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-
-
-@Entity
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
-public class TH_Sensor {
+@Entity
+public class H_Sensor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "t_id")
     private  int id;
-
-    // 온도
-
+    // 습도
     @Column(nullable = false)
     @Setter
-    private  double value;  //  온도상태
+    private  double value;  //  습도상태
 
     @Column(nullable = false)
     @Setter
     private  int Count;  // 총 온도  숫자
 
-    // 월별 막힌 숫자
 
     @Setter
     private LocalDateTime localDateTime;
 
     @OneToOne
     @JoinColumn(name ="sewer_id")
-    private Sewer sewer; // 하수구와 일대일 관계
+    private Sewer sewer;
 
+    @Builder
 
-
-
-
-
-   @Builder
-    public TH_Sensor(int id, double value, int count,  LocalDateTime datetime, Sewer sewer) {
+    public H_Sensor(int id, double value, int count,  LocalDateTime date, Sewer sewer) {
         this.id = id;
         this.value = value;
         Count = count;
-
-        localDateTime= datetime;
+        localDateTime = date;
         this.sewer = sewer;
     }
 }

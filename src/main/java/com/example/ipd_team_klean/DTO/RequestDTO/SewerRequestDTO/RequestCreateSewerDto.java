@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class RequestCreateSewerDto {
-    private double latitude;
-    private double longitude;
+    private String latitude;
+    private String longitude;
 
     private String blockstate;
     private  String smallstate;
@@ -17,7 +17,7 @@ public class RequestCreateSewerDto {
 
     @Builder
 
-    public RequestCreateSewerDto(double latitude, double longitude, String blockstate, String smallstate, String tstate, String hstate) {
+    public RequestCreateSewerDto(String latitude, String longitude, String blockstate, String smallstate, String tstate, String hstate) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.blockstate = blockstate;

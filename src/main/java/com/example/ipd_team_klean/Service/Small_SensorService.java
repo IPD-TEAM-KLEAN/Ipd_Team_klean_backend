@@ -24,81 +24,84 @@ public class Small_SensorService {
     private  final Small_SensorRepository small_sensorRepository;
     private  final SewerRepository sewerRepository;
 
-    public ResponseUpdateSmallSewerDto UpdateSewer(RequestUpdateSewerSmallDto requestUpdateSewerSmallDto){
 
-        Sewer findsewer = sewerRepository.findByLatAndLon(requestUpdateSewerSmallDto.getLatitude(), requestUpdateSewerSmallDto.getLongitude());
-        if(findsewer.getSmall_sensor().getStates().equals("Disable")){
-            if(requestUpdateSewerSmallDto.getState().equals("Active")){
-                findsewer.setState("Active");
-                findsewer.getSmall_sensor().setStates(requestUpdateSewerSmallDto.getState());
-                findsewer.getSmall_sensor().setSmallCount(findsewer.getSmall_sensor().getSmallCount()+1);
-                LocalDate nowmonth = LocalDate.now();
-                if (nowmonth.getMonthValue()==1){
-                    findsewer.getSmall_sensor().setJan_Count(findsewer.getSmall_sensor().getJuly_Count()+1);
-                }else if (nowmonth.getMonthValue()==2){
-                    findsewer.getSmall_sensor().setFeb_Count(findsewer.getSmall_sensor().getFeb_Count()+1);
-                } else if (nowmonth.getMonthValue()==3) {
-                    findsewer.getSmall_sensor().setMar_Count(findsewer.getSmall_sensor().getMar_Count()+1);
-                }else if (nowmonth.getMonthValue()==4) {
-                    findsewer.getSmall_sensor().setApr_Count(findsewer.getSmall_sensor().getApr_Count()+1);
-                }else if (nowmonth.getMonthValue()==5) {
-                    findsewer.getSmall_sensor().setMay_Count(findsewer.getSmall_sensor().getMay_Count()+1);
-                }else if (nowmonth.getMonthValue()==6) {
-                    findsewer.getSmall_sensor().setJun_Count(findsewer.getSmall_sensor().getJun_Count()+1);
-                }else if (nowmonth.getMonthValue()==7) {
-                    findsewer.getSmall_sensor().setJuly_Count(findsewer.getSmall_sensor().getJun_Count()+1);
-                }else if (nowmonth.getMonthValue()==8) {
-                    findsewer.getSmall_sensor().setAug_Count(findsewer.getSmall_sensor().getAug_Count()+1);
-                }else if (nowmonth.getMonthValue()==9) {
-                    findsewer.getSmall_sensor().setSep_Count(findsewer.getSmall_sensor().getSep_Count()+1);
-                }else if (nowmonth.getMonthValue()==10) {
-                    findsewer.getSmall_sensor().setOct_Count(findsewer.getSmall_sensor().getOct_Count()+1);
+    // changesmall 에서
 
-                }else if (nowmonth.getMonthValue()==11) {
-                    findsewer.getSmall_sensor().setNov_Count(findsewer.getSmall_sensor().getNov_Count()+1);
-                }else if (nowmonth.getMonthValue()==12) {
-                    findsewer.getSmall_sensor().setDec_Count(findsewer.getSmall_sensor().getDec_Count()+1);
-                }
-
-                findsewer.getSmall_sensor().setSmallDate(LocalDate.now()); // 막힌 날짜
-                findsewer.getSmall_sensor().setSmallTime(LocalTime.now()); // 막힌 시간
-                }
-            }
-
-        if(findsewer.getSmall_sensor().getStates().equals("Active")){
-            if(requestUpdateSewerSmallDto.getState().equals("Disable")){
-                findsewer.getSmall_sensor().setStates("Disable");
-                if(findsewer.getBlock().getStates().equals("Disable") && findsewer.getTh_sensor().getHStates().equals("Disable") && findsewer.getTh_sensor().getTStates().equals("Disable")){
-                    findsewer.setState("Disable");
-                }
-            }
-
-
-        }
-        sewerRepository.save(findsewer);
-
-        ResponseUpdateSmallSewerDto responseUpdateSmallSewerDto = ResponseUpdateSmallSewerDto.builder()
-                .state(findsewer.getSmall_sensor().getStates())
-                .smallCount(findsewer.getSmall_sensor().getSmallCount())
-                .jan(findsewer.getSmall_sensor().getJan_Count())
-                .feb(findsewer.getSmall_sensor().getFeb_Count())
-                .apr(findsewer.getSmall_sensor().getApr_Count())
-                .may(findsewer.getSmall_sensor().getMay_Count())
-                .jun(findsewer.getSmall_sensor().getJun_Count())
-                .july(findsewer.getSmall_sensor().getJuly_Count())
-                .aug(findsewer.getSmall_sensor().getAug_Count())
-                .sep(findsewer.getSmall_sensor().getSep_Count())
-                .oct(findsewer.getSmall_sensor().getOct_Count())
-                .nov(findsewer.getSmall_sensor().getNov_Count())
-                .dec(findsewer.getSmall_sensor().getDec_Count())
-                .smallDate(findsewer.getSmall_sensor().getSmallDate())
-                .smallTime(findsewer.getSmall_sensor().getSmallTime())
-
-                .build();
-
-        return responseUpdateSmallSewerDto;
-
-    }
+//    public ResponseUpdateSmallSewerDto UpdateSewer(RequestUpdateSewerSmallDto requestUpdateSewerSmallDto){
+//
+//        Sewer findsewer = sewerRepository.findByLatAndLon(requestUpdateSewerSmallDto.getLatitude(), requestUpdateSewerSmallDto.getLongitude());
+//        if(findsewer.getSmall_sensor().getStates().equals("Disable")){
+//            if(requestUpdateSewerSmallDto.getState().equals("Active")){
+//                findsewer.setState("Active");
+//                findsewer.getSmall_sensor().setStates(requestUpdateSewerSmallDto.getState());
+//                findsewer.getSmall_sensor().setSmallCount(findsewer.getSmall_sensor().getSmallCount()+1);
+//                LocalDate nowmonth = LocalDate.now();
+//                if (nowmonth.getMonthValue()==1){
+//                    findsewer.getSmall_sensor().setJan_Count(findsewer.getSmall_sensor().getJuly_Count()+1);
+//                }else if (nowmonth.getMonthValue()==2){
+//                    findsewer.getSmall_sensor().setFeb_Count(findsewer.getSmall_sensor().getFeb_Count()+1);
+//                } else if (nowmonth.getMonthValue()==3) {
+//                    findsewer.getSmall_sensor().setMar_Count(findsewer.getSmall_sensor().getMar_Count()+1);
+//                }else if (nowmonth.getMonthValue()==4) {
+//                    findsewer.getSmall_sensor().setApr_Count(findsewer.getSmall_sensor().getApr_Count()+1);
+//                }else if (nowmonth.getMonthValue()==5) {
+//                    findsewer.getSmall_sensor().setMay_Count(findsewer.getSmall_sensor().getMay_Count()+1);
+//                }else if (nowmonth.getMonthValue()==6) {
+//                    findsewer.getSmall_sensor().setJun_Count(findsewer.getSmall_sensor().getJun_Count()+1);
+//                }else if (nowmonth.getMonthValue()==7) {
+//                    findsewer.getSmall_sensor().setJuly_Count(findsewer.getSmall_sensor().getJun_Count()+1);
+//                }else if (nowmonth.getMonthValue()==8) {
+//                    findsewer.getSmall_sensor().setAug_Count(findsewer.getSmall_sensor().getAug_Count()+1);
+//                }else if (nowmonth.getMonthValue()==9) {
+//                    findsewer.getSmall_sensor().setSep_Count(findsewer.getSmall_sensor().getSep_Count()+1);
+//                }else if (nowmonth.getMonthValue()==10) {
+//                    findsewer.getSmall_sensor().setOct_Count(findsewer.getSmall_sensor().getOct_Count()+1);
+//
+//                }else if (nowmonth.getMonthValue()==11) {
+//                    findsewer.getSmall_sensor().setNov_Count(findsewer.getSmall_sensor().getNov_Count()+1);
+//                }else if (nowmonth.getMonthValue()==12) {
+//                    findsewer.getSmall_sensor().setDec_Count(findsewer.getSmall_sensor().getDec_Count()+1);
+//                }
+//
+//                findsewer.getSmall_sensor().setSmallDate(LocalDate.now()); // 막힌 날짜
+//                findsewer.getSmall_sensor().setSmallTime(LocalTime.now()); // 막힌 시간
+//                }
+//            }
+//
+//        if(findsewer.getSmall_sensor().getStates().equals("Active")){
+//            if(requestUpdateSewerSmallDto.getState().equals("Disable")){
+//                findsewer.getSmall_sensor().setStates("Disable");
+//                if(findsewer.getBlock().getStates().equals("Disable") && findsewer.getTh_sensor().getHStates().equals("Disable") && findsewer.getTh_sensor().getTStates().equals("Disable")){
+//                    findsewer.setState("Disable");
+//                }
+//            }
+//
+//
+//        }
+//        sewerRepository.save(findsewer);
+//
+//        ResponseUpdateSmallSewerDto responseUpdateSmallSewerDto = ResponseUpdateSmallSewerDto.builder()
+//                .state(findsewer.getSmall_sensor().getStates())
+//                .smallCount(findsewer.getSmall_sensor().getSmallCount())
+//                .jan(findsewer.getSmall_sensor().getJan_Count())
+//                .feb(findsewer.getSmall_sensor().getFeb_Count())
+//                .apr(findsewer.getSmall_sensor().getApr_Count())
+//                .may(findsewer.getSmall_sensor().getMay_Count())
+//                .jun(findsewer.getSmall_sensor().getJun_Count())
+//                .july(findsewer.getSmall_sensor().getJuly_Count())
+//                .aug(findsewer.getSmall_sensor().getAug_Count())
+//                .sep(findsewer.getSmall_sensor().getSep_Count())
+//                .oct(findsewer.getSmall_sensor().getOct_Count())
+//                .nov(findsewer.getSmall_sensor().getNov_Count())
+//                .dec(findsewer.getSmall_sensor().getDec_Count())
+//                .smallDate(findsewer.getSmall_sensor().getSmallDate())
+//                .smallTime(findsewer.getSmall_sensor().getSmallTime())
+//
+//                .build();
+//
+//        return responseUpdateSmallSewerDto;
+//
+//    }
 
     public ResponseSmallInfoDto SmallInfo(int id) throws Throwable {
         Sewer findsewer = (Sewer) sewerRepository.findById(id).orElseThrow(()-> new CustomException("", ErrorCode.NotFoundUserException));
@@ -267,7 +270,7 @@ public class Small_SensorService {
         return  totalDec;
     }
 
-    public ResponseLookUpSmallDto LookUpSamll(double lat, double lon){
+    public ResponseLookUpSmallDto LookUpSamll(String lat, String lon){
 
         Sewer findSewer = sewerRepository.findByLatAndLon(lat, lon);
         ResponseLookUpSmallDto responseLookUpSmallDto = ResponseLookUpSmallDto.builder()
