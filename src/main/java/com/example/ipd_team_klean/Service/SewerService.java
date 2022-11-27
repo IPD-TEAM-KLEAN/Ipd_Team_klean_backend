@@ -98,13 +98,11 @@ public class SewerService {
 
         TH_Sensor th = TH_Sensor.builder()
                 .value(0)
-                .count(0)
                 .sewer(sewer)
                 .build();
 
         H_Sensor h = H_Sensor.builder()
                 .value(0)
-                .count(0)
                 .sewer(sewer)
                 .build();
 

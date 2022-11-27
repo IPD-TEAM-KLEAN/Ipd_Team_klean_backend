@@ -108,6 +108,7 @@ public class BlockService {
         // 해당 하수구 찾기
         Sewer findsewer = (Sewer) sewerRepository.findById(id).orElseThrow(()-> new CustomException("",ErrorCode.NotFoundUserException));
 
+
         ResponseBlockInfoDto responseBlockInfoDto = ResponseBlockInfoDto
                 .builder()
                 .state(findsewer.getBlock().getStates())

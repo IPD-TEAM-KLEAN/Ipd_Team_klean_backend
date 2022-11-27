@@ -7,6 +7,8 @@ import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeSmallResponeDTO.ChangeSm
 import com.example.ipd_team_klean.Entity.ChangeBlock;
 import com.example.ipd_team_klean.Entity.ChangeSmall;
 import com.example.ipd_team_klean.Entity.Sewer;
+import com.example.ipd_team_klean.Error.CustomException;
+import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Repository.SewerRepository.SewerRepository;
 import com.example.ipd_team_klean.Repository.Small_SensorRepository.ChangeSmallRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,9 @@ public class ChangeSmallService {
 
         Sewer findsewer = sewerRepository.findByLatAndLon(changeSmallRequestDto.getLatitude(), changeSmallRequestDto.getLongitude());
 
+        if(findsewer == null){
+            new CustomException("", ErrorCode.NotFoundUserException);
+        }
 
         if(findsewer.getSmall_sensor().getStates().equals("Disable")){
             if(changeSmallRequestDto.getState().equals("Active")){

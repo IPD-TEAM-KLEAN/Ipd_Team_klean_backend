@@ -1,13 +1,17 @@
 package com.example.ipd_team_klean.Controller;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.ChnageThRequestDTO.ChangeTRequestDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeTListReponseDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeTResponseDto;
 import com.example.ipd_team_klean.Service.ChangeTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +24,13 @@ public class ChangeTController {
         ChangeTResponseDto changeTResponseDto = changeTService.changeT(changeTRequestDto);
 
         return  ResponseEntity.ok().body(changeTResponseDto);
+    }
+
+    @GetMapping("/change/temperature/list")
+    public ResponseEntity<?> ChangeTemperatureList(){
+        List<ChangeTListReponseDto> changeTListReponseDtoList = changeTService.changeTList();
+
+        return ResponseEntity.ok().body(changeTListReponseDtoList);
     }
 
 

@@ -1,9 +1,12 @@
 package com.example.ipd_team_klean.Service;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.ChnageBlockDTO.ChangeBlockRequestDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChageBlockResponseDTO.ChangeBlockListResponseDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChageBlockResponseDTO.ChangeBlockReponseDto;
 import com.example.ipd_team_klean.Entity.ChangeBlock;
 import com.example.ipd_team_klean.Entity.Sewer;
+import com.example.ipd_team_klean.Error.CustomException;
+import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Repository.BlockRepository.ChangeBlockRepository;
 import com.example.ipd_team_klean.Repository.SewerRepository.SewerRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +40,9 @@ public class ChangeBlockService {
 
 
         Sewer findsewer = sewerRepository.findByLatAndLon(changeBlockRequestDto.getLatitude(), changeBlockRequestDto.getLongitude());
+        if(findsewer == null){
+            new CustomException("", ErrorCode.NotFoundUserException);
+        }
         if(findsewer.getBlock().getStates().equals("Disable")){ // 전값이 disable이고 현재 오는 값이 active일시
             System.out.println("yes");
             if(changeBlockRequestDto.getState().equals("Active")){
@@ -94,6 +102,24 @@ public class ChangeBlockService {
 
         ChangeBlockReponseDto changeBlockReponseDto = ChangeBlockReponseDto.builder().value(changeBlock.getValue()).build();
         return changeBlockReponseDto;
+    }
+
+    public List<ChangeBlockListResponseDto> changeBlockList(){
+        List<ChangeBlock> changeBlocklist = changeBlockRepository.findAll();
+        List<ChangeBlockListResponseDto> changeBlockReponseDtoList = new ArrayList<>();
+        for(ChangeBlock changeBlock : changeBlocklist){
+            ChangeBlockListResponseDto changeBlockReponseDto = ChangeBlockListResponseDto
+                    .builder()
+                    .localDateTime(changeBlock.getCrateDate())
+                    .value(changeBlock.getValue())
+                    .latitude(changeBlock.getBlock().getSewer().getLat())
+                    .longitude(changeBlock.getBlock().getSewer().getLon())
+                    .sewerId(changeBlock.getBlock().getSewer().getId())
+                    .build();
+
+            changeBlockReponseDtoList.add(changeBlockReponseDto);
+        }
+        return changeBlockReponseDtoList;
     }
 
 }

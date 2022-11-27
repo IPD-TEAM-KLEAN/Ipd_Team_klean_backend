@@ -1,6 +1,7 @@
 package com.example.ipd_team_klean.Service;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.ChnageThRequestDTO.ChangeTRequestDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeTListReponseDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeTResponseDto;
 import com.example.ipd_team_klean.Entity.ChangeT;
 import com.example.ipd_team_klean.Entity.Sewer;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +42,24 @@ public class ChangeTService {
 
         return  changeTResponseDto;
 
+    }
 
+    public  List<ChangeTListReponseDto> changeTList(){
+        List<ChangeT> changeTList = changeTRepository.findAll();
+        List<ChangeTListReponseDto> changeTListReponseDtoList = new ArrayList<>();
 
+        for( ChangeT changeT : changeTList ){
+            ChangeTListReponseDto changeTListReponseDto = ChangeTListReponseDto
+                    .builder()
+                    .latitude(changeT.getTh_sensor().getSewer().getLat())
+                    .longitude(changeT.getTh_sensor().getSewer().getLon())
+                    .sewerId(changeT.getTh_sensor().getSewer().getId())
+                    .value(changeT.getValue())
+                    .localDateTime(changeT.getCrateDate())
+                    .build();
+
+            changeTListReponseDtoList.add(changeTListReponseDto);
+        }
+        return  changeTListReponseDtoList;
     }
 }
