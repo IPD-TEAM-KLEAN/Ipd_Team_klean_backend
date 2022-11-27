@@ -4,6 +4,8 @@ import com.example.ipd_team_klean.DTO.RequestDTO.ChnageThRequestDTO.ChangeHReque
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeHResponseDto;
 import com.example.ipd_team_klean.Entity.ChangeH;
 import com.example.ipd_team_klean.Entity.Sewer;
+import com.example.ipd_team_klean.Error.CustomException;
+import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Repository.SewerRepository.SewerRepository;
 import com.example.ipd_team_klean.Repository.TH_SensorRepository.ChangeHRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,10 @@ public class ChangeHService {
 
 
         Sewer findsewer = sewerRepository.findByLatAndLon(changeHRequestDto.getLatitude(), changeHRequestDto.getLongitude());
+
+        if(findsewer == null){
+            new CustomException("", ErrorCode.NotFoundUserException);
+        }
 
         findsewer.getH_sensor().setValue(changeHRequestDto.getValue());
         findsewer.getH_sensor().setLocalDateTime(LocalDateTime.now());

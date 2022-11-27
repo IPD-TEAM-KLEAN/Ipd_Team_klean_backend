@@ -23,9 +23,7 @@ public class H_Sensor {
     @Setter
     private  double value;  //  습도상태
 
-    @Column(nullable = false)
-    @Setter
-    private  int Count;  // 총 온도  숫자
+
 
 
     @Setter
@@ -37,10 +35,10 @@ public class H_Sensor {
 
     @Builder
 
-    public H_Sensor(int id, double value, int count,  LocalDateTime date, Sewer sewer) {
+    public H_Sensor(int id, double value,  LocalDateTime date, Sewer sewer) {
         this.id = id;
         this.value = value;
-        Count = count;
+
         localDateTime = date;
         this.sewer = sewer;
     }

@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Getter
 public class ChangeBlockReponseDto {
@@ -12,7 +14,7 @@ public class ChangeBlockReponseDto {
 
     @Builder
 
-    public ChangeBlockReponseDto(double value) {
+    public ChangeBlockReponseDto(double value, LocalDateTime localDateTime) {
         this.value = value;
     }
 }

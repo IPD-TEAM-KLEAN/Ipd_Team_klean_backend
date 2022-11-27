@@ -25,14 +25,14 @@ public class TH_Sensor {
     @Setter
     private  double value;  //  온도상태
 
-    @Column(nullable = false)
-    @Setter
-    private  int Count;  // 총 온도  숫자
+
 
     // 월별 막힌 숫자
 
     @Setter
     private LocalDateTime localDateTime;
+
+
 
     @OneToOne
     @JoinColumn(name ="sewer_id")
@@ -44,11 +44,9 @@ public class TH_Sensor {
 
 
    @Builder
-    public TH_Sensor(int id, double value, int count,  LocalDateTime datetime, Sewer sewer) {
+    public TH_Sensor(int id, double value,  LocalDateTime datetime, Sewer sewer) {
         this.id = id;
         this.value = value;
-        Count = count;
-
         localDateTime= datetime;
         this.sewer = sewer;
     }
