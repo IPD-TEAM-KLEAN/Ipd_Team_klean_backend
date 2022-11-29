@@ -15,6 +15,9 @@ import com.example.ipd_team_klean.Repository.Small_SensorRepository.Small_Sensor
 import com.example.ipd_team_klean.Repository.TH_SensorRepository.H_SensorRepository;
 import com.example.ipd_team_klean.Repository.TH_SensorRepository.TH_SensorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -155,6 +158,13 @@ public class SewerService {
                 .region_name(sewer.getRegion_name())
                 .build();
         return responseBlockSewerInfo;
+    }
+
+
+    public Slice<ResponseActiveSewerListDto> getSewerScroll(Pageable pageable){
+        Slice<ResponseActiveSewerListDto> sewerListDtos = sewerRepository.getSewerScroll(pageable);
+
+        return  sewerListDtos;
     }
 
 

@@ -7,6 +7,8 @@ import com.example.ipd_team_klean.Error.ErrorCode;
 import com.example.ipd_team_klean.Service.SewerService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.Authentication;
@@ -49,7 +51,7 @@ public class SewerController {
 
 
 
-    @GetMapping("active/sewer/info/{id}")
+    @GetMapping("/active/sewer/info/{id}")
     public  ResponseEntity<?> BlockSewerInfo(Authentication authentication, @PathVariable(value = "id") int id) throws Throwable {
         if(authentication == null){
             throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
@@ -60,6 +62,17 @@ public class SewerController {
 
 
         return ResponseEntity.ok().body(sewer);
+    }
+
+    @GetMapping("/active/sewer/list")
+    public ResponseEntity<?> GetSewerScroll(Pageable pageable , Authentication authentication){
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
+
+        Slice<ResponseActiveSewerListDto> responseActiveSewerListDtos = sewerService.getSewerScroll(pageable);
+
+        return ResponseEntity.ok().body(responseActiveSewerListDtos);
     }
 
 
