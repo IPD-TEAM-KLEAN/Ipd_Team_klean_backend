@@ -1,6 +1,9 @@
 package com.example.ipd_team_klean.Repository.SewerRepository;
 
+import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
 import com.example.ipd_team_klean.Entity.Sewer;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,4 +23,7 @@ public interface SewerRepository extends JpaRepository<Sewer, Integer>, SewerRep
 
     @Override
     List<Sewer> getStateActiveSewer();
+
+    @Override
+    Slice<ResponseActiveSewerListDto> getSewerScroll(Pageable pageable);
 }

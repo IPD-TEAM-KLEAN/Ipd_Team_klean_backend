@@ -22,7 +22,9 @@ public class ChangeTService {
 
     public ChangeTResponseDto changeT(ChangeTRequestDto changeTRequestDto){
 
-
+        System.out.println(changeTRequestDto.getLatitude());
+        System.out.println(changeTRequestDto.getLongitude());
+        System.out.println(changeTRequestDto.getValue());
 
         Sewer findsewer = sewerRepository.findByLatAndLon(changeTRequestDto.getLatitude(), changeTRequestDto.getLongitude());
 
