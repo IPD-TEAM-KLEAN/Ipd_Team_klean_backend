@@ -43,7 +43,7 @@ public class SewerController {
             throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
         }
 
-        List<ResponseActiveSewerListDto> responseActiveSewerListDtos  = sewerService.getStateActiveSewer();
+        ResponseActiveSewerListSize responseActiveSewerListDtos  = sewerService.getStateActiveSewer();
 
         return  ResponseEntity.ok().body(responseActiveSewerListDtos);
 
