@@ -3,6 +3,7 @@ package com.example.ipd_team_klean.Service;
 import com.example.ipd_team_klean.DTO.RequestDTO.SewerRequestDTO.RequestCreateSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseLookUpBlockDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListSize;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseSewerInfo;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseCreateSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SmallSensorResponeDTO.ResponseLookUpSmallDto;
@@ -128,7 +129,7 @@ public class SewerService {
     }
 
 
-    public List<ResponseActiveSewerListDto>  getStateActiveSewer(){
+    public ResponseActiveSewerListSize getStateActiveSewer(){
         List<Sewer> sewers = sewerRepository.getStateActiveSewer();
         List<ResponseActiveSewerListDto> responseActiveSewerListDtos = new ArrayList<>();
         for(Sewer sewer : sewers){
@@ -142,7 +143,12 @@ public class SewerService {
                     .build();
             responseActiveSewerListDtos.add(responseActiveSewerListDto);
         }
-        return responseActiveSewerListDtos;
+        ResponseActiveSewerListSize responseActiveSewerListSize = ResponseActiveSewerListSize
+                .builder()
+                .activeSewerListSize(responseActiveSewerListDtos.size())
+                .build();
+
+        return responseActiveSewerListSize;
     }
 
 
