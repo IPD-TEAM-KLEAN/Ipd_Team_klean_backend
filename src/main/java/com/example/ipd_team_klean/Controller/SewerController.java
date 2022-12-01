@@ -76,6 +76,28 @@ public class SewerController {
     }
 
 
+    @GetMapping("/sewer/info/block/{id}")
+    public ResponseEntity<?> SewerInfoBlock(Authentication authentication, @PathVariable(value = "id") int id)throws Throwable{
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
+
+        ResponseSewerInfoBlockSeason responseSewerInfoBlockSeason = sewerService.SewerInfoBlock(id);
+
+        return  ResponseEntity.ok().body(responseSewerInfoBlockSeason);
+    }
+    @GetMapping("/sewer/info/small/{id}")
+    public ResponseEntity<?> SewerInfoSmall(Authentication authentication, @PathVariable(value = "id") int id)throws Throwable{
+        if(authentication == null){
+            throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
+        }
+
+        ResponseSewerInfoSmallSeason responseSewerInfoSmallSeason = sewerService.SewerInfoSmall(id);
+
+        return  ResponseEntity.ok().body(responseSewerInfoSmallSeason);
+    }
+
+
 
 
 

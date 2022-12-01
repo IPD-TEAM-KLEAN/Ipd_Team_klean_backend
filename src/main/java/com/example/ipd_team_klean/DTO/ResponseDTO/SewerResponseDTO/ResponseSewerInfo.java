@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @NoArgsConstructor
@@ -19,13 +20,41 @@ public class ResponseSewerInfo {
     private String Region_name;
 
 
-    @Builder
+    private  Double nowTemperature;
 
-    public ResponseSewerInfo(String latitude, String longtitude, String state, String address_name, String region_name) {
+
+    private  Double nowHumidity;
+
+    private int BlockCount;
+    private  LocalDate BlockDate;
+    private  LocalTime BlockTime;
+    private  Double BlockValue;
+
+    private  int SmallCount;
+    private  LocalDate SmallDate;
+    private  LocalTime SmallTime;
+
+
+
+
+
+
+
+    @Builder
+    public ResponseSewerInfo(String latitude, String longtitude, String state, String address_name, String region_name, Double nowTemperature, Double nowHumidity, int blockCount, LocalDate blockDate, LocalTime blockTime, Double blockValue, int smallCount, LocalDate smallDate, LocalTime smallTime) {
         Latitude = latitude;
         Longtitude = longtitude;
         State = state;
         Address_name = address_name;
         Region_name = region_name;
+        this.nowTemperature = nowTemperature;
+        this.nowHumidity = nowHumidity;
+        BlockCount = blockCount;
+        BlockDate = blockDate;
+        BlockTime = blockTime;
+        BlockValue = blockValue;
+        SmallCount = smallCount;
+        SmallDate = smallDate;
+        SmallTime = smallTime;
     }
 }
