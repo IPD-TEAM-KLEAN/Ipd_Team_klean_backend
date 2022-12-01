@@ -43,6 +43,8 @@ public class ChangeBlockService {
         if(findsewer == null){
             new CustomException("", ErrorCode.NotFoundUserException);
         }
+        System.out.println(changeBlockRequestDto.getValue());
+        findsewer.getBlock().setValue(changeBlockRequestDto.getValue());
         if(findsewer.getBlock().getStates().equals("Disable")){ // 전값이 disable이고 현재 오는 값이 active일시
             System.out.println("yes");
             if(changeBlockRequestDto.getState().equals("Active")){

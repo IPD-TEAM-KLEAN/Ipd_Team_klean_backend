@@ -26,6 +26,10 @@ public class Block {
     private  int BlockCount;  // 총 막힌 숫자
 
 
+    @Setter
+    private  double value;
+
+
     // 월별 막힌 숫자
     @Column(nullable = false)
     @Setter
@@ -74,7 +78,7 @@ public class Block {
     private Sewer sewer;
 
     @Builder
-    public Block(String states, int blockCount, int jan_Count, int feb_Count, int mar_Count, int apr_Count, int may_Count, int jun_Count, int july_Count, int aug_Count, int sep_Count, int oct_Count, int nov_Count, int dec_Count, LocalDate blockDate, LocalTime blockTime, Sewer sewer) {
+    public Block(String states, int blockCount, int jan_Count, int feb_Count, int mar_Count, int apr_Count, int may_Count, int jun_Count, int july_Count, int aug_Count, int sep_Count, int oct_Count, int nov_Count, int dec_Count, LocalDate blockDate, LocalTime blockTime, Sewer sewer, double value) {
         States = states;
         BlockCount = blockCount;
         Jan_Count = jan_Count;
@@ -92,5 +96,6 @@ public class Block {
         BlockDate = blockDate;
         BlockTime = blockTime;
         this.sewer = sewer;
+        this.value = value;
     }
 }

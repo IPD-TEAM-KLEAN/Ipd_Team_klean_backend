@@ -2,10 +2,7 @@ package com.example.ipd_team_klean.Service;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.SewerRequestDTO.RequestCreateSewerDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BlockResponseDTO.ResponseLookUpBlockDto;
-import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListDto;
-import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseActiveSewerListSize;
-import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseSewerInfo;
-import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.ResponseCreateSewerDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.SewerResponseDTO.*;
 import com.example.ipd_team_klean.DTO.ResponseDTO.SmallSensorResponeDTO.ResponseLookUpSmallDto;
 import com.example.ipd_team_klean.Entity.*;
 import com.example.ipd_team_klean.Error.CustomException;
@@ -162,6 +159,15 @@ public class SewerService {
                 .state(sewer.getState())
                 .address_name(sewer.getAddress_name())
                 .region_name(sewer.getRegion_name())
+                .nowTemperature(sewer.getTh_sensor().getValue())
+                .nowHumidity(sewer.getH_sensor().getValue())
+                .blockCount(sewer.getBlock().getBlockCount())
+                .blockDate(sewer.getBlock().getBlockDate())
+                .blockTime(sewer.getBlock().getBlockTime())
+                .smallCount(sewer.getSmall_sensor().getSmallCount())
+                .smallDate(sewer.getSmall_sensor().getSmallDate())
+                .smallTime(sewer.getSmall_sensor().getSmallTime())
+                .blockValue(sewer.getBlock().getValue())
                 .build();
         return responseBlockSewerInfo;
     }
@@ -171,6 +177,48 @@ public class SewerService {
         Slice<ResponseActiveSewerListDto> sewerListDtos = sewerRepository.getSewerScroll(pageable);
 
         return  sewerListDtos;
+    }
+
+
+    public ResponseSewerInfoBlockSeason SewerInfoBlock(int id) throws  Throwable{
+        Sewer sewer = (Sewer) sewerRepository.findById(id).orElseThrow(()-> new CustomException("",ErrorCode.NotFoundUserException));
+
+        ResponseSewerInfoBlockSeason responseSewerInfoBlockSeason = ResponseSewerInfoBlockSeason
+                .builder()
+                .jan_Count(sewer.getBlock().getJan_Count())
+                .feb_Count(sewer.getBlock().getFeb_Count())
+                .mar_Count(sewer.getBlock().getMar_Count())
+                .apr_Count(sewer.getBlock().getApr_Count())
+                .may_Count(sewer.getBlock().getMay_Count())
+                .jun_Count(sewer.getBlock().getJun_Count())
+                .july_Count(sewer.getBlock().getJuly_Count())
+                .aug_Count(sewer.getBlock().getAug_Count())
+                .sep_Count(sewer.getBlock().getSep_Count())
+                .oct_Count(sewer.getBlock().getOct_Count())
+                .nov_Count(sewer.getBlock().getNov_Count())
+                .dec_Count(sewer.getBlock().getDec_Count())
+                .build();
+        return  responseSewerInfoBlockSeason;
+    }
+
+    public  ResponseSewerInfoSmallSeason SewerInfoSmall(int id) throws  Throwable{
+        Sewer sewer = (Sewer) sewerRepository.findById(id).orElseThrow(()-> new CustomException("",ErrorCode.NotFoundUserException));
+        ResponseSewerInfoSmallSeason responseSewerInfoSmallSeason = ResponseSewerInfoSmallSeason
+                .builder()
+                .jan_Count(sewer.getSmall_sensor().getJan_Count())
+                .feb_Count(sewer.getSmall_sensor().getFeb_Count())
+                .mar_Count(sewer.getSmall_sensor().getMar_Count())
+                .apr_Count(sewer.getSmall_sensor().getApr_Count())
+                .may_Count(sewer.getSmall_sensor().getMay_Count())
+                .jun_Count(sewer.getSmall_sensor().getJun_Count())
+                .july_Count(sewer.getSmall_sensor().getJuly_Count())
+                .aug_Count(sewer.getSmall_sensor().getAug_Count())
+                .sep_Count(sewer.getSmall_sensor().getSep_Count())
+                .oct_Count(sewer.getSmall_sensor().getOct_Count())
+                .nov_Count(sewer.getSmall_sensor().getNov_Count())
+                .dec_Count(sewer.getSmall_sensor().getDec_Count())
+                .build();
+        return  responseSewerInfoSmallSeason;
     }
 
 
