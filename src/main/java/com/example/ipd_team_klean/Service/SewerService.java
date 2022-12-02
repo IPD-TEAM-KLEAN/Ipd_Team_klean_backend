@@ -7,6 +7,7 @@ import com.example.ipd_team_klean.DTO.ResponseDTO.SmallSensorResponeDTO.Response
 import com.example.ipd_team_klean.Entity.*;
 import com.example.ipd_team_klean.Error.CustomException;
 import com.example.ipd_team_klean.Error.ErrorCode;
+import com.example.ipd_team_klean.Repository.BatteryRepository.BatteryRepository;
 import com.example.ipd_team_klean.Repository.BlockRepository.BlockRepository;
 import com.example.ipd_team_klean.Repository.SewerRepository.SewerRepository;
 import com.example.ipd_team_klean.Repository.Small_SensorRepository.Small_SensorRepository;
@@ -18,6 +19,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,13 +37,14 @@ public class SewerService {
     private  final TH_SensorRepository th_sensorRepository;
 
     private  final H_SensorRepository h_sensorRepository;
+    private  final BatteryRepository batteryRepository;
 
 
 
 
     public ResponseCreateSewerDto CreateSewer(RequestCreateSewerDto requestCreateSewerDto) throws Exception {
         if(sewerRepository.existsByLatAndLon(requestCreateSewerDto.getLatitude(),requestCreateSewerDto.getLongitude())== true){
-            throw new CustomException("해당 이메일이 존재 합니다.", ErrorCode.DuplicatedSewerException);
+            throw new CustomException("해당 하수구는 존재 합니다.", ErrorCode.DuplicatedSewerException);
         }
         //System.out.println(requestCreateSewerDto.getLongitude());
         //System.out.println(requestCreateSewerDto.getLatitude());
@@ -107,11 +111,20 @@ public class SewerService {
                 .sewer(sewer)
                 .build();
 
+        Battery battery = Battery.builder()
+                .value(100)
+                .createTime(LocalTime.now())
+                .createDate(LocalDate.now())
+                .sewer(sewer)
+                .build();
+
         sewerRepository.save(sewer);
         blockRepository.save(block);
         small_sensorRepository.save(small);
         th_sensorRepository.save(th);
         h_sensorRepository.save(h);
+        batteryRepository.save(battery);
+
 
 
         ResponseCreateSewerDto responseCreateSewerDto = ResponseCreateSewerDto.builder()
@@ -168,6 +181,9 @@ public class SewerService {
                 .smallDate(sewer.getSmall_sensor().getSmallDate())
                 .smallTime(sewer.getSmall_sensor().getSmallTime())
                 .blockValue(sewer.getBlock().getValue())
+                .batteryValue(sewer.getBattery().getValue())
+                .batteryDate(sewer.getBattery().getCreateDate())
+                .batteryTime(sewer.getBattery().getCreateTime())
                 .build();
         return responseBlockSewerInfo;
     }

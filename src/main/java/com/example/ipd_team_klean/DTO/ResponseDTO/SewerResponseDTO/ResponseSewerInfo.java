@@ -34,6 +34,11 @@ public class ResponseSewerInfo {
     private  LocalDate SmallDate;
     private  LocalTime SmallTime;
 
+    private  double BatteryValue;
+    private  LocalDate BatteryDate;
+    private  LocalTime BatteryTime;
+
+
 
 
 
@@ -41,7 +46,7 @@ public class ResponseSewerInfo {
 
 
     @Builder
-    public ResponseSewerInfo(String latitude, String longtitude, String state, String address_name, String region_name, Double nowTemperature, Double nowHumidity, int blockCount, LocalDate blockDate, LocalTime blockTime, Double blockValue, int smallCount, LocalDate smallDate, LocalTime smallTime) {
+    public ResponseSewerInfo(String latitude, String longtitude, String state, String address_name, String region_name, Double nowTemperature, Double nowHumidity, int blockCount, LocalDate blockDate, LocalTime blockTime, Double blockValue, int smallCount, LocalDate smallDate, LocalTime smallTime, double batteryValue, LocalDate batteryDate, LocalTime batteryTime) {
         Latitude = latitude;
         Longtitude = longtitude;
         State = state;
@@ -56,5 +61,8 @@ public class ResponseSewerInfo {
         SmallCount = smallCount;
         SmallDate = smallDate;
         SmallTime = smallTime;
+        this.BatteryValue = batteryValue;
+        this.BatteryDate = batteryDate;
+        this.BatteryTime= batteryTime;
     }
 }

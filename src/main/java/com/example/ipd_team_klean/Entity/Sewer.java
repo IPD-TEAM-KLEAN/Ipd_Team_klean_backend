@@ -49,6 +49,10 @@ public class Sewer {
     private H_Sensor h_sensor; // 온습도 센서와 일대일 관계
 
 
+    @OneToOne(mappedBy = "sewer")
+    private  Battery battery;
+
+
 
 
 
