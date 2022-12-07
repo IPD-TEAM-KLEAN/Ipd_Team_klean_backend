@@ -1,5 +1,5 @@
 # Ipd_Team_klean_backend
-**IPD TEMA_KLEAN  BYEOT **
+**IPD TEMA_KLEAN  BYEOT backend **
 <br></br>
 
 ## 🤝🏻팀원
