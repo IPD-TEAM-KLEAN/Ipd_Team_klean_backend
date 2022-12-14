@@ -21,8 +21,11 @@ public class Battery {
 
     @Setter
     private  double value;
+
+    @Column(name = "BatteryDate")
     @Setter
     private LocalDate createDate;
+    @Column(name = "BatteryTime")
     @Setter
     private LocalTime createTime;
 

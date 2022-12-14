@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,8 @@ public class SewerController {
     @PostMapping("/create/sewer")
     public ResponseEntity<?> CreateSewer(@RequestBody RequestCreateSewerDto requestCreateSewerDto) throws Exception {
 
+//        System.out.println(requestCreateSewerDto.getLatitude());
+//        System.out.println(requestCreateSewerDto.getLongitude());
         ResponseCreateSewerDto sewer = sewerService.CreateSewer(requestCreateSewerDto);
 
         return  ResponseEntity.ok().body(sewer);

@@ -1,8 +1,11 @@
 package com.example.ipd_team_klean.Service;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.ChnageThRequestDTO.ChangeHRequestDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeHListReponseDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeHResponseDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeTListReponseDto;
 import com.example.ipd_team_klean.Entity.ChangeH;
+import com.example.ipd_team_klean.Entity.ChangeT;
 import com.example.ipd_team_klean.Entity.Sewer;
 import com.example.ipd_team_klean.Error.CustomException;
 import com.example.ipd_team_klean.Error.ErrorCode;
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +26,8 @@ public class ChangeHService {
     private  final SewerRepository sewerRepository;
 
     public ChangeHResponseDto changeH(ChangeHRequestDto changeHRequestDto){
+
+
 
 
 
@@ -44,5 +51,25 @@ public class ChangeHService {
         ChangeHResponseDto changeHResponseDto = ChangeHResponseDto.builder().value(changeHRequestDto.getValue()).build();
         return  changeHResponseDto;
 
+    }
+
+
+    public List<ChangeHListReponseDto> changeHList(){
+        List<ChangeH> changeHList = changeHRepository.findAll();
+        List<ChangeHListReponseDto> changeHListReponseDtoList = new ArrayList<>();
+
+        for( ChangeH changeh : changeHList ){
+            ChangeHListReponseDto changeHListReponseDto = ChangeHListReponseDto
+                    .builder()
+                    .latitude(changeh.getH_sensor().getSewer().getLat())
+                    .longitude(changeh.getH_sensor().getSewer().getLon())
+                    .sewerId(changeh.getH_sensor().getSewer().getId())
+                    .value(changeh.getValue())
+                    .localDateTime(changeh.getCrateDate())
+                    .build();
+
+            changeHListReponseDtoList.add(changeHListReponseDto);
+        }
+        return  changeHListReponseDtoList;
     }
 }

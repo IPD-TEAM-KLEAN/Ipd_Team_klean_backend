@@ -10,6 +10,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table(name = "smell")
 public class Small_Sensor {
 
     @Id

@@ -26,6 +26,10 @@ public class ChangeTService {
         System.out.println(changeTRequestDto.getLongitude());
         System.out.println(changeTRequestDto.getValue());
 
+
+
+
+
         Sewer findsewer = sewerRepository.findByLatAndLon(changeTRequestDto.getLatitude(), changeTRequestDto.getLongitude());
 
         findsewer.getTh_sensor().setValue(changeTRequestDto.getValue());

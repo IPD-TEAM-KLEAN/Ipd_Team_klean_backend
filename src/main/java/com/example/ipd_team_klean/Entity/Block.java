@@ -10,11 +10,12 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table(name = "Distance")
 public class Block {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "block_id")
+    @Column(name = "distance_id")
     private  int id;
 
 

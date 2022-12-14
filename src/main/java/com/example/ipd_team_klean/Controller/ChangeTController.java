@@ -5,11 +5,9 @@ import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeTLis
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeTResponseDto;
 import com.example.ipd_team_klean.Service.ChangeTService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,8 @@ public class ChangeTController {
     public ResponseEntity<?> ChangeTemperature(@RequestBody ChangeTRequestDto changeTRequestDto){
 
         ChangeTResponseDto changeTResponseDto = changeTService.changeT(changeTRequestDto);
+
+        System.out.println(changeTResponseDto.getValue());
 
         return  ResponseEntity.ok().body(changeTResponseDto);
     }

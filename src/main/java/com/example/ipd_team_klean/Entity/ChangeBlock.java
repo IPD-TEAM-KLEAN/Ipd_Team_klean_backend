@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @Entity
+@Table(name = "CollectionDistance")
 // 막힘이 변화 되었을 때 변경 사항
 public class ChangeBlock {
 
@@ -22,7 +23,7 @@ public class ChangeBlock {
     private  double value;
     private LocalDateTime crateDate;
     @ManyToOne
-    @JoinColumn(name = "block_id")
+    @JoinColumn(name = "distance_id")
     private  Block block;
 
     @Builder

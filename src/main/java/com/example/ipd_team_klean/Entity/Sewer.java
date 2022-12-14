@@ -11,14 +11,15 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table(name = "WaterPipe")
 public class Sewer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sewer_id")
     private  int id;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "latitude")
     private  String lat;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "longitude")
     private  String lon;
 
     @Setter

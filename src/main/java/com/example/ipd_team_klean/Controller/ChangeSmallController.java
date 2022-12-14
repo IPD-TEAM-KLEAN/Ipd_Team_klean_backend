@@ -4,17 +4,28 @@ package com.example.ipd_team_klean.Controller;
 import com.example.ipd_team_klean.DTO.RequestDTO.ChnagSmallDTO.ChangeSmallRequestDto;
 import com.example.ipd_team_klean.DTO.RequestDTO.ChnageBlockDTO.ChangeBlockRequestDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeSmallResponeDTO.ChangeSmallResponseDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeSmallResponeDTO.ChangeSmellListResponseDto;
 import com.example.ipd_team_klean.Service.ChangeSmallService;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class ChangeSmallController {
     private  final ChangeSmallService changeSmallService;
+
+    @GetMapping("/")
+    public String root(){
+        System.out.println("root");
+        return "root";
+    }
 
     @PostMapping("/change/small")
     public ResponseEntity<?> ChangeBlock(@RequestBody ChangeSmallRequestDto changeSmallRequestDto){
@@ -28,6 +39,11 @@ public class ChangeSmallController {
         return  ResponseEntity.ok().body(changeSmallResponseDto);
 
 
+    }
+    @GetMapping("/change/smell/list")
+    public ResponseEntity<?> ChangeSmellList(){
+        List<ChangeSmellListResponseDto> changeSmellListResponseDtoList = changeSmallService.changeSmellListResponseDtoList();
+        return ResponseEntity.ok().body(changeSmellListResponseDtoList);
     }
 
 }

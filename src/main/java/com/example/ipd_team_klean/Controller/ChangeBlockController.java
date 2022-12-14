@@ -20,19 +20,21 @@ public class ChangeBlockController {
     private  final ChangeBlockService changeBlockService;
 
 
-    @PostMapping("/change/block")
+    @PostMapping("/change/distance")
     public ResponseEntity<?> ChangeBlock(@RequestBody ChangeBlockRequestDto changeBlockRequestDto){
         //현재 dto 로 changeblock 만들어 주고
         // 위도 경도로 해당 하수구를 찾기
         // 해당 하수구 state 와 분기 숫자 change
         // save 해주고
         // create 주고
+        System.out.println("block");
+        System.out.println(changeBlockRequestDto.getValue());
         ChangeBlockReponseDto changeBlockReponseDto = changeBlockService.changeBlock(changeBlockRequestDto);
         return  ResponseEntity.ok().body(changeBlockReponseDto);
 
     }
 
-    @GetMapping("/change/block/list")
+    @GetMapping("/change/distance/list")
     public ResponseEntity<?> ChangeBlockList(){
 
         List<ChangeBlockListResponseDto> changeBlockListResponseDtoList = changeBlockService.changeBlockList();

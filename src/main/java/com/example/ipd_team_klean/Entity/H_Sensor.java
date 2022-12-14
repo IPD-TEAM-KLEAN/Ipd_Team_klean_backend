@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @RequiredArgsConstructor
 @Getter
 @Entity
+@Table(name = "Humidity")
 public class H_Sensor {
 
     @Id
@@ -27,6 +28,7 @@ public class H_Sensor {
 
 
     @Setter
+    @Column(name = "HumitityTime")
     private LocalDateTime localDateTime;
 
     @OneToOne
