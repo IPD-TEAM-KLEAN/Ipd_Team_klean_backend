@@ -11,11 +11,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Entity
+@Table(name = "CollectionTemperature" )
 public class ChangeT {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
     private  double value;
+
+    @Column(name = "CreateTime")
     private LocalDateTime crateDate;
 
     @ManyToOne

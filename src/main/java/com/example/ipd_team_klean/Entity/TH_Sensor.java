@@ -12,6 +12,7 @@ import java.time.LocalTime;
 @Entity
 @NoArgsConstructor
 @Getter
+@Table(name = "Temperature")
 public class TH_Sensor {
 
     @Id
@@ -30,6 +31,7 @@ public class TH_Sensor {
     // 월별 막힌 숫자
 
     @Setter
+    @Column(name = "TemperatureTime")
     private LocalDateTime localDateTime;
 
 

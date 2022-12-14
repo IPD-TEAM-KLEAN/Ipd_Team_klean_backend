@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @Entity
+@Table(name = "CollectionSmell")
 public class ChangeSmall {
 
     @Id

@@ -1,15 +1,15 @@
-package com.example.ipd_team_klean.DTO.ResponseDTO.ChageBlockResponseDTO;
+package com.example.ipd_team_klean.DTO.ResponseDTO.ChangeSmallResponeDTO;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
-public class ChangeBlockListResponseDto {
+public class ChangeSmellListResponseDto {
+
     private  double value;
     private LocalDateTime localDateTime;
 
@@ -21,12 +21,12 @@ public class ChangeBlockListResponseDto {
 
     @Builder
 
-    public ChangeBlockListResponseDto(double value, LocalDateTime localDateTime, String latitude, String longitude, int sewerId, String address_name) {
+    public ChangeSmellListResponseDto(double value, LocalDateTime localDateTime, String latitude, String longitude, int sewerId, String address_name) {
         this.value = value;
         this.localDateTime = localDateTime;
         this.latitude = latitude;
         this.longitude = longitude;
         this.sewerId = sewerId;
-        this.Address_name = address_name;
+        Address_name = address_name;
     }
 }

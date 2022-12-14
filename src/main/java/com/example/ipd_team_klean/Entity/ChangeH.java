@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
+@Table(name = "CollectionHumidity")
 public class ChangeH {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

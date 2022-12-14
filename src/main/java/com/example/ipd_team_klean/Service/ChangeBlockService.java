@@ -31,7 +31,7 @@ public class ChangeBlockService {
         // save 해주고
         // create 주고
         System.out.println(changeBlockRequestDto.getState());
-        System.out.println(changeBlockRequestDto.getLongitude());
+        System.out.println(changeBlockRequestDto.getLongitude()); // 일단 여건 맞음
 
 
         if(changeBlockRequestDto.getState().equals("Active")){
@@ -114,6 +114,7 @@ public class ChangeBlockService {
                     .builder()
                     .localDateTime(changeBlock.getCrateDate())
                     .value(changeBlock.getValue())
+                    .address_name(changeBlock.getBlock().getSewer().getAddress_name())
                     .latitude(changeBlock.getBlock().getSewer().getLat())
                     .longitude(changeBlock.getBlock().getSewer().getLon())
                     .sewerId(changeBlock.getBlock().getSewer().getId())

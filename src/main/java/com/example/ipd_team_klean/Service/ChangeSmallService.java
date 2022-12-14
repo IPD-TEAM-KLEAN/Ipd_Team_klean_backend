@@ -2,8 +2,10 @@ package com.example.ipd_team_klean.Service;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.ChnagSmallDTO.ChangeSmallRequestDto;
 import com.example.ipd_team_klean.DTO.RequestDTO.ChnageBlockDTO.ChangeBlockRequestDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChageBlockResponseDTO.ChangeBlockListResponseDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChageBlockResponseDTO.ChangeBlockReponseDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeSmallResponeDTO.ChangeSmallResponseDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeSmallResponeDTO.ChangeSmellListResponseDto;
 import com.example.ipd_team_klean.Entity.ChangeBlock;
 import com.example.ipd_team_klean.Entity.ChangeSmall;
 import com.example.ipd_team_klean.Entity.Sewer;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -96,10 +100,25 @@ public class ChangeSmallService {
 
         return  changeSmallResponseDto;
 
-
-
-
-
-
     }
+
+    public List<ChangeSmellListResponseDto> changeSmellListResponseDtoList(){
+        List<ChangeSmall> changeSmallList = changeSmallRepository.findAll();
+        List<ChangeSmellListResponseDto> changeSmellListResponseDtoList = new ArrayList<>();
+        for(ChangeSmall changeSmall : changeSmallList){
+            ChangeSmellListResponseDto changeSmellListResponseDto = ChangeSmellListResponseDto.builder()
+                    .localDateTime(changeSmall.getCrateDate())
+                    .value(changeSmall.getValue())
+                    .address_name(changeSmall.getSmall_sensor().getSewer().getAddress_name())
+                    .latitude(changeSmall.getSmall_sensor().getSewer().getLat())
+                    .longitude(changeSmall.getSmall_sensor().getSewer().getLon())
+                    .sewerId(changeSmall.getSmall_sensor().getSewer().getId())
+                    .build();
+            changeSmellListResponseDtoList.add(changeSmellListResponseDto);
+
+        }
+        return  changeSmellListResponseDtoList;
+    }
+
+
 }
