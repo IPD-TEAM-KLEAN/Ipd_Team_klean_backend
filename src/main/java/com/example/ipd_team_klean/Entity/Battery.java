@@ -17,10 +17,15 @@ public class Battery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "battery_id")
     private  int id;
 
     @Setter
     private  double value;
+
+
+    @Setter
+    private LocalDateTime localDateTime;
 
     @Column(name = "BatteryDate")
     @Setter
@@ -35,11 +40,12 @@ public class Battery {
 
 
     @Builder
-    public Battery(int id, double value, LocalDate createDate, LocalTime createTime, Sewer sewer) {
+    public Battery(int id, double value,LocalDateTime localDateTime, LocalDate createDate, LocalTime createTime, Sewer sewer) {
         this.id = id;
         this.value = value;
         this.createDate = createDate;
         this.createTime = createTime;
         this.sewer = sewer;
+        this.localDateTime = localDateTime;
     }
 }

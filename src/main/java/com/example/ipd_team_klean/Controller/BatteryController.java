@@ -1,13 +1,18 @@
 package com.example.ipd_team_klean.Controller;
 
 import com.example.ipd_team_klean.DTO.RequestDTO.BatteryRequestDTO.ChangeBatteryRequestDTO;
+import com.example.ipd_team_klean.DTO.ResponseDTO.BatteryResponeDTO.ChangeBatteryListResponseDto;
 import com.example.ipd_team_klean.DTO.ResponseDTO.BatteryResponeDTO.ChangeBatteryResponseDto;
+import com.example.ipd_team_klean.DTO.ResponseDTO.ChangeTHResponseDTO.ChangeHListReponseDto;
 import com.example.ipd_team_klean.Service.BatteryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,5 +26,8 @@ public class BatteryController {
         return ResponseEntity.ok().body(changeBatteryResponseDto);
 
     }
+
+
+
 
 }
