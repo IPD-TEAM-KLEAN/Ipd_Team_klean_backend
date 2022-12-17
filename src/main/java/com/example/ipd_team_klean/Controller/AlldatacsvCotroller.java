@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,9 +46,18 @@ public class AlldatacsvCotroller {
     public String setContent(List<ChangeBlockListResponseDto> changeBlockListResponseDtoList, List<ChangeBatteryListResponseDto> changeBatteryListResponseDtoList , List<ChangeHListReponseDto> changeHListReponseDtoList, List<ChangeTListReponseDto> changeTListReponseDtoList){
         String data = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
-        data = "pid, 거리, 온도, 습도, 베터리,  시간, 위도, 경도 , 하수구 번호, 도로명 주소" + "\n";
+        data = "pid, Distance[mm], Temperature[°C], Humidity[PH], Battery[%],  DateTime[yyyy/MM/dd/HH:mm:ss], Latitude[°N], Longitude[°N], WaterPipeId, AddressName" + "\n";
 
         for(int i=0; i<changeBlockListResponseDtoList.size(); i++){
+            if(changeBatteryListResponseDtoList.get(i) == null){
+                break;
+            }
+            if(changeHListReponseDtoList.get(i)== null){
+                break;
+            }
+            if(changeTListReponseDtoList.get(i) == null) {
+                break;
+            }
             data += changeBlockListResponseDtoList.get(i).getId()+","; // 거리 id
             data += changeBlockListResponseDtoList.get(i).getValue()+","; // 거리 value
             data += changeTListReponseDtoList.get(i).getValue()+",";
@@ -58,6 +68,7 @@ public class AlldatacsvCotroller {
             data += changeBlockListResponseDtoList.get(i).getLongitude()+",";
             data += changeBlockListResponseDtoList.get(i).getSewerId()+",";
             data += changeBlockListResponseDtoList.get(i).getAddress_name()+ "\n" ;
+
 
         }
 
