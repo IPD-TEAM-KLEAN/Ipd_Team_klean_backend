@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 public class ChangeBlockListResponseDto {
+    private  int id;
     private  double value;
     private LocalDateTime localDateTime;
 
@@ -21,7 +22,8 @@ public class ChangeBlockListResponseDto {
 
     @Builder
 
-    public ChangeBlockListResponseDto(double value, LocalDateTime localDateTime, String latitude, String longitude, int sewerId, String address_name) {
+    public ChangeBlockListResponseDto(int id ,double value, LocalDateTime localDateTime, String latitude, String longitude, int sewerId, String address_name) {
+        this.id = id;
         this.value = value;
         this.localDateTime = localDateTime;
         this.latitude = latitude;
