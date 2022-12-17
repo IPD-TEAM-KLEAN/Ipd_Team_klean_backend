@@ -112,6 +112,7 @@ public class ChangeBlockService {
         for(ChangeBlock changeBlock : changeBlocklist){
             ChangeBlockListResponseDto changeBlockReponseDto = ChangeBlockListResponseDto
                     .builder()
+                    .id(changeBlock.getId())
                     .localDateTime(changeBlock.getCrateDate())
                     .value(changeBlock.getValue())
                     .address_name(changeBlock.getBlock().getSewer().getAddress_name())
