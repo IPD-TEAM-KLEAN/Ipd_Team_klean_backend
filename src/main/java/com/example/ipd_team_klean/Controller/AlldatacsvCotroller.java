@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -48,16 +49,10 @@ public class AlldatacsvCotroller {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
         data = "pid, Distance[mm], Temperature[°C], Humidity[PH], Battery[%],  DateTime[yyyy/MM/dd/HH:mm:ss], Latitude[°N], Longitude[°N], WaterPipeId, AddressName" + "\n";
 
-        for(int i=0; i<changeBlockListResponseDtoList.size(); i++){
-            if(changeBatteryListResponseDtoList.get(i) == null){
-                break;
-            }
-            if(changeHListReponseDtoList.get(i)== null){
-                break;
-            }
-            if(changeTListReponseDtoList.get(i) == null) {
-                break;
-            }
+        int[] arr ={changeBlockListResponseDtoList.size(), changeBatteryListResponseDtoList.size(), changeHListReponseDtoList.size(), changeTListReponseDtoList.size()};
+        int min = Arrays.stream(arr).min().getAsInt();
+        for(int i=0; i<min; i++){
+
             data += changeBlockListResponseDtoList.get(i).getId()+","; // 거리 id
             data += changeBlockListResponseDtoList.get(i).getValue()+","; // 거리 value
             data += changeTListReponseDtoList.get(i).getValue()+",";
@@ -72,16 +67,7 @@ public class AlldatacsvCotroller {
 
         }
 
-//        for(ChangeBlockListResponseDto changeBlockListResponseDto : changeBlockListResponseDtoList){
 //
-//            data += changeBlockListResponseDto.getId() + ",";
-//            data += changeBlockListResponseDto.getValue()+",";
-//            data += changeBlockListResponseDto.getLocalDateTime()+",";
-//            data += changeBlockListResponseDto.getLatitude() + ",";
-//            data += changeBlockListResponseDto.getLongitude() + ",";
-//            data += changeBlockListResponseDto.getSewerId() +",";
-//            data += changeBlockListResponseDto.getAddress_name() + "\n";
-//        }
         return  data;
     }
 }
